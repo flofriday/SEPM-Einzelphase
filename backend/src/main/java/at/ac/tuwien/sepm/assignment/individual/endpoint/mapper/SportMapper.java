@@ -10,7 +10,7 @@ public class SportMapper {
     public SportDto entityToDto(Sport sport) {
         if (sport == null)
             return null;
-        return new SportDto(sport.getId(), sport.getName());
+        return new SportDto(sport.getId(), sport.getName(), sport.getDescription());
     }
 
 }

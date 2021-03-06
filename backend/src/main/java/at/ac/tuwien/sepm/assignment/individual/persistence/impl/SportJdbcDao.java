@@ -41,6 +41,7 @@ public class SportJdbcDao implements SportDao {
         final Sport sport = new Sport();
         sport.setId(resultSet.getLong("id"));
         sport.setName(resultSet.getString("name"));
+        sport.setDescription(resultSet.getString("description"));
         return sport;
     }
 }

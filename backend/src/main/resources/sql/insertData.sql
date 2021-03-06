@@ -3,10 +3,10 @@
 -- negative IDs are used to not interfere with user-entered data and allow clean deletion of test data
 
 
-DELETE FROM sport where ID < 0;
-INSERT INTO sport (ID, NAME)
-VALUES (-1, 'Polo')
-       , (-2, 'Dressage')
-       , (-3, 'Foxhunting')
+DELETE FROM sport where id < 0;
+INSERT INTO sport (id, name, description)
+VALUES (-1, 'Polo', 'A sport for the rich british.')
+       , (-2, 'Dressage', 'The sport for beautiful horses.')
+       , (-3, 'Foxhunting', 'Cause foxes arent dying left and right')
       ;
 
