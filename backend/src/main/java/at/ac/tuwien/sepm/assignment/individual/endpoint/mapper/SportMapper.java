@@ -4,6 +4,9 @@ import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.SportDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class SportMapper {
 
@@ -11,6 +14,14 @@ public class SportMapper {
         if (sport == null)
             return null;
         return new SportDto(sport.getId(), sport.getName(), sport.getDescription());
+    }
+
+    public List<SportDto> entityListToDto(List<Sport> sportList) {
+        List<SportDto> dtos = new ArrayList<>();
+        for (Sport sport: sportList) {
+            dtos.add(this.entityToDto(sport));
+        }
+        return dtos;
     }
 
 }

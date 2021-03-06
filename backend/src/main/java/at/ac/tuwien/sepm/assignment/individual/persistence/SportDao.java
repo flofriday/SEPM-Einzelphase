@@ -4,6 +4,8 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 
+import java.util.List;
+
 public interface SportDao {
 
     /**
@@ -14,6 +16,13 @@ public interface SportDao {
      * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data store.
      * @throws NotFoundException   will be thrown if the sport could not be found in the database.
      */
-    Sport getOneById(Long id);
+    Sport getOneById(Long id) throws NotFoundException;
 
+    /**
+     * Get all sports from the database
+     *
+     * @return the list with all sports.
+     * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data store.
+     */
+    List<Sport> getAll();
 }

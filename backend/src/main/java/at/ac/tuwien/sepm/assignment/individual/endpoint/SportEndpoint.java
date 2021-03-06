@@ -5,6 +5,8 @@ import at.ac.tuwien.sepm.assignment.individual.endpoint.mapper.SportMapper;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.service.SportService;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +37,11 @@ public class SportEndpoint {
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading sport", e);
         }
+    }
+
+    @GetMapping(value = "")
+    public List<SportDto> getAll() {
+        LOGGER.info("GET " + BASE_URL + "/");
+        return sportMapper.entityListToDto(sportService.getAll());
     }
 }
