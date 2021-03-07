@@ -1,0 +1,24 @@
+<h1 class="display-4" style="margin: 20px 0">Sports</h1>
+
+<div *ngIf="!error">
+    <!--
+    <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">New Sport</button>
+    -->
+
+    <div *ngIf="sports" class="card-deck">
+        <div *ngFor="let sport of sports" class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{sport.name}}</h5>
+                <p *ngIf="sport.description" class="card-text">{{sport.description}}</p>
+            </div>
+        </div>
+    </div>
+
+    <p *ngIf="!sports"><i>There are no sports yet.</i></p>
+</div>
+
+<div *ngIf="error" class="alert alert-danger">
+    <strong>Error! </strong> {{errorMessage}}
+    <hr>
+    <button (click)="loadSports()" type="button" class="btn btn-secondary">Reload</button>
+</div>
