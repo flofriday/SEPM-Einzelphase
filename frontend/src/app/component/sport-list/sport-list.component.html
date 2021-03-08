@@ -3,11 +3,14 @@
 <div *ngIf="!error">
     <a role="button" class="btn btn-primary" style="margin-bottom: 20px;" routerLink="new">New Sport</a>
 
-    <div *ngIf="sports" class="card-deck">
-        <div *ngFor="let sport of sports" class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{sport.name}}</h5>
-                <p *ngIf="sport.description" class="card-text">{{sport.description}}</p>
+    <div *ngIf="sports" class="row">
+        <div *ngFor="let sport of sports" class="col-md-4" style="padding-bottom: 20px;">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{sport.name}}</h5>
+                    <p *ngIf="sport.description" class="card-text">{{sport.description}}</p>
+                    <p *ngIf="!sport.description" class="card-text"><i>no description available</i></p>
+                </div>
             </div>
         </div>
     </div>
