@@ -1,0 +1,22 @@
+<h1 class="display-4" style="margin: 20px 0">New Sport</h1>
+
+<div *ngIf="error" class="alert alert-danger">
+    <strong>Error! </strong> {{errorMessage}}
+</div>
+
+<form (ngSubmit)="onSubmit()" #sportForm="ngForm">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Sport Name" required [(ngModel)]="sport.name"
+            name="name">
+    </div>
+    <div class="form-group">
+        <label for="description">Description (optional)</label>
+        <textarea class="form-control" id="description" rows="3" [(ngModel)]="sport.description"
+            name="description"></textarea>
+    </div>
+    <div class=" text-right">
+        <a role="button" class="btn btn-secondary mr-1" routerLink="/sports">Cancle</a>
+        <button type="submit" class="btn btn-primary" [disabled]="!sportForm.form.valid">Create</button>
+    </div>
+</form>

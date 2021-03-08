@@ -8,6 +8,7 @@ import {SportComponent} from './component/sport/sport.component';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { SportListComponent } from './component/sport-list/sport-list.component';
+import { SportFormComponent } from './component/sport-form/sport-form.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SportListComponent } from './component/sport-list/sport-list.component'
     HeaderComponent,
     SportComponent,
     SportListComponent,
+    SportFormComponent,
   ],
   imports: [
     BrowserModule,
