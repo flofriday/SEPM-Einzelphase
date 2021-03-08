@@ -2,7 +2,9 @@ package at.ac.tuwien.sepm.assignment.individual.endpoint;
 
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.SportDto;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.mapper.SportMapper;
+import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.service.SportService;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -41,7 +43,18 @@ public class SportEndpoint {
 
     @GetMapping(value = "")
     public List<SportDto> getAll() {
-        LOGGER.info("GET " + BASE_URL + "/");
+        LOGGER.info("GET " + BASE_URL);
         return sportMapper.entityListToDto(sportService.getAll());
+    }
+
+    @PostMapping(value = "")
+    public SportDto add(@RequestBody SportDto sportDto) {
+        LOGGER.info("POST " + BASE_URL);
+        Sport sport = sportMapper.dtoToEntity(sportDto);
+        try {
+            return sportMapper.entityToDto(sportService.add(sport));
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during validating the new sport", e);
+        }
     }
 }

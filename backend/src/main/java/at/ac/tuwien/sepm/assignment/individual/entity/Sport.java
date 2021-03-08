@@ -19,6 +19,11 @@ public class Sport {
         this.id = id;
     }
 
+    public Sport(Long id, String name, String description) {
+        this(id, name);
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }

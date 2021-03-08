@@ -25,4 +25,13 @@ public interface SportDao {
      * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data store.
      */
     List<Sport> getAll();
+
+    /**
+     * Add a new sport.
+     *
+     * @param sport to add to the database.
+     * @return the sport added, which is the same as the sport parameter but has now the correct id.
+     * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data store.
+     */
+    Sport add(Sport sport);
 }

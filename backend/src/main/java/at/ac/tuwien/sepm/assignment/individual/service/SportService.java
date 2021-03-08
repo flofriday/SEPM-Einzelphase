@@ -3,11 +3,11 @@ package at.ac.tuwien.sepm.assignment.individual.service;
 import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
+import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 
 import java.util.List;
 
 public interface SportService {
-
 
     /**
      * Gets the sport with a given ID.
@@ -27,4 +27,13 @@ public interface SportService {
      */
     List<Sport> getAll();
 
+    /**
+     * Add a new sport.
+     *
+     * @param sport to add to the storage.
+     * @return a modified version of the sport parameter, how it was actually stored.
+     * @throws ValidationException if the input is not valid.
+     * @throws ServiceException  if something goes wrong during data processing.
+     */
+    Sport add(Sport sport) throws ValidationException;
 }

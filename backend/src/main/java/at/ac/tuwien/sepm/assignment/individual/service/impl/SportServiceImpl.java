@@ -4,17 +4,17 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
+import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.SportDao;
 import at.ac.tuwien.sepm.assignment.individual.service.SportService;
 import at.ac.tuwien.sepm.assignment.individual.util.Validator;
-import java.lang.invoke.MethodHandles;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
+
+import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 @Service
 public class SportServiceImpl implements SportService {
@@ -44,7 +44,28 @@ public class SportServiceImpl implements SportService {
         LOGGER.trace("getall()");
         try {
             return dao.getAll();
-        } catch (PersistenceException e){
+        } catch (PersistenceException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Sport add(Sport sport) throws ValidationException {
+        LOGGER.trace("add({})", sport);
+
+        // The sport has to have a name
+        validator.validateNewSport(sport);
+
+        // Remove the id as only the presistance layer can know the Id the new sport will have.
+        sport.setId(null);
+
+        // Remove leading and trailing whitespaces
+        sport.setName(sport.getName().strip());
+        sport.setDescription(sport.getDescription().strip());
+
+        try {
+            return dao.add(sport);
+        } catch (PersistenceException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
