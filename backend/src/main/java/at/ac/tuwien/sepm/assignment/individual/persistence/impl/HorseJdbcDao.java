@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Sex;
+import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import org.slf4j.Logger;
@@ -28,6 +29,22 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
+    public Horse getOneById(Long id) throws NotFoundException {
+        LOGGER.trace("getOneById({})", id);
+        final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
+        List<Horse> horses;
+        try {
+            horses = jdbcTemplate.query(sql, this::mapRow, id);
+        } catch (DataAccessException e) {
+            throw new PersistenceException(e);
+        }
+
+        if (horses.isEmpty()) throw new NotFoundException("Could not find horse with id " + id);
+
+        return horses.get(0);
+    }
+
+    @Override
     public List<Horse> getAll() {
         LOGGER.trace("getAll()");
         final String sql = "SELECT * FROM " + TABLE_NAME;
@@ -41,7 +58,7 @@ public class HorseJdbcDao implements HorseDao {
         return horses;
     }
 
-    private Long getLongObject(ResultSet resultSet, String field) throws SQLException{
+    private Long getLongObject(ResultSet resultSet, String field) throws SQLException {
         Object obj = resultSet.getObject(field);
         if (obj == null) return null;
         return (Long) obj;

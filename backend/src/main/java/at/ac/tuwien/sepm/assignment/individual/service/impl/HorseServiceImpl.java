@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.service.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
@@ -24,6 +25,16 @@ public class HorseServiceImpl implements HorseService {
     public HorseServiceImpl(HorseDao horseDao, Validator validator) {
         this.dao = horseDao;
         this.validator = validator;
+    }
+
+    @Override
+    public Horse getOneById(Long id) throws NotFoundException {
+        LOGGER.trace("getOneById({})", id);
+        try {
+            return dao.getOneById(id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
     }
 
     @Override
