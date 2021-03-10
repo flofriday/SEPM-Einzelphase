@@ -29,7 +29,7 @@ export class SportListComponent implements OnInit {
       error => {
         this.defaultServiceErrorHandling(error);
       }
-    )
+    );
   }
 
   private defaultServiceErrorHandling(error: any) {
