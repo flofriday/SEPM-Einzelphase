@@ -1,6 +1,6 @@
 Name: Florian Freitag
 Matriculationnumber: 11908096
-Sum: 10h58m
+Sum: 11h58m
 
 Date, Duration, Story
 05.03.2021, 10m, Story 12
@@ -9,3 +9,4 @@ Date, Duration, Story
 06.03.2021, 1h54m, Story 8
 07.03.2021, 1h48m, Story 8
 08.03.2021, 4h7m, Story 7
+09.03.2021, 1h, Story 1

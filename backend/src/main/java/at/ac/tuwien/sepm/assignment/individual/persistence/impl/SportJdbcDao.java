@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SportJdbcDao implements SportDao {
 
-    private static final String TABLE_NAME = "Sport";
+    private static final String TABLE_NAME = "sport";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final JdbcTemplate jdbcTemplate;
 

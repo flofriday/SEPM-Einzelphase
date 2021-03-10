@@ -53,15 +53,15 @@ public class SportServiceImpl implements SportService {
     public Sport add(Sport sport) throws ValidationException {
         LOGGER.trace("add({})", sport);
 
-        // The sport has to have a name
+        // The sport has to be valid
         validator.validateNewSport(sport);
-
-        // Remove the id as only the presistance layer can know the Id the new sport will have.
-        sport.setId(null);
 
         // Remove leading and trailing whitespaces
         sport.setName(sport.getName().strip());
         sport.setDescription(sport.getDescription().strip());
+
+        // Description should not be an empty string but null
+        if (sport.getDescription().isEmpty()) sport.setDescription(null);
 
         try {
             return dao.add(sport);

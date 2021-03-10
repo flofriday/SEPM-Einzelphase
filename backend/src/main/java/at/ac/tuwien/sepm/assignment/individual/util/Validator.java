@@ -15,8 +15,20 @@ public class Validator {
     public void validateNewSport(Sport sport) throws ValidationException {
         LOGGER.trace("validateNewSport({})", sport);
 
+        if (sport.getId() != null) {
+            throw new ValidationException("A new sport cannot already have an id.");
+        }
+
         if (sport.getName() == null || sport.getName().strip().isEmpty()) {
-            throw new ValidationException("A sport has to have a name.");
+            throw new ValidationException("A new sport has to have a name.");
+        }
+
+        if (sport.getName().length() > 256) {
+            throw new ValidationException("The sport name can only have 256 characters.");
+        }
+
+        if (sport.getDescription() != null && sport.getDescription().length() > 1024) {
+            throw new ValidationException("The sport description can only have 1024 characters.");
         }
     }
 }
