@@ -17,6 +17,8 @@ VALUES (-1, 'Polo', NULL)
 ;
 
 INSERT INTO horse (id, name, description, birthday, sex, favoriteSport, mother, father)
-VALUES (-1, 'Bojack Horseman', 'Failed filmstar.', '1999-8-7', 'male', -1, NULL, NULL)
+VALUES (-1, 'Beatrice Horseman', 'Throughout BoJacks flashbacks, Beatrice was passive-aggressive, sardonic, neglectful, cynical, bitter, jaded, and verbally abusive. She was an overall atrocious mother. ',
+        '1938-2-1', 'female', -2, NULL, NULL)
+     , (-2, 'Bojack Horseman', 'Failed filmstar.', '1999-8-7', 'male', -1, -1, NULL)
 ;
 
