@@ -12,9 +12,20 @@
         <p *ngIf="!horse.description" class="card-text"><i>no description</i></p>
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item"><strong>Birthdate:</strong> {{horse.birthDay}}</li>
-        <li class="list-group-item"><strong>Sex:</strong> {{horse.sex}}</li>
-        <li class="list-group-item"><strong>Favorite Sport:</strong> {{horse.favoriteSport}}</li>
+        <li class="list-group-item"><strong>Birthdate: </strong> {{horse.birthDay}}</li>
+        <li class="list-group-item"><strong>Sex: </strong> {{horse.sex}}</li>
+        <li class="list-group-item"><strong>Favorite Sport: </strong>
+            <span *ngIf="sport">{{sport.name}}</span>
+            <i *ngIf="!horse.favoriteSportId">not set</i>
+        </li>
+        <li class="list-group-item"><strong>mother: </strong>
+            <a [routerLink]="['/horses', horse.motherId]" *ngIf="mother">{{mother.name}}</a>
+            <i *ngIf="!horse.motherId">not set</i>
+        </li>
+        <li class="list-group-item"><strong>father: </strong>
+            <span *ngIf="father">{{father.name}}</span>
+            <i *ngIf="!horse.fatherId">not set</i>
+        </li>
     </ul>
     <div class="card-body">
         <a href="#" class="card-link">Family Tree</a>
