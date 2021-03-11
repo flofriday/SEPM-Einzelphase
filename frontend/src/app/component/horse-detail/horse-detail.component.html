@@ -1,0 +1,30 @@
+<h1 class="display-4" style="margin: 20px 0">Horse Details</h1>
+
+<!--
+<app-horse-form *ngIf="!error" [horse]="horse" [readonly]="true">
+</app-horse-form>
+-->
+
+<div *ngIf="!error && horse" class="card mx-auto" style="max-width: 32rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{horse.name}}</h5>
+        <p *ngIf="horse.description" class="card-text">{{horse.description}}</p>
+        <p *ngIf="!horse.description" class="card-text"><i>no description</i></p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Birthdate:</strong> {{horse.birthDay}}</li>
+        <li class="list-group-item"><strong>Sex:</strong> {{horse.sex}}</li>
+        <li class="list-group-item"><strong>Favorite Sport:</strong> {{horse.favoriteSport}}</li>
+    </ul>
+    <div class="card-body">
+        <a href="#" class="card-link">Family Tree</a>
+        <a href="#" class="card-link">Edit</a>
+        <a href="#" class="card-link">Delete</a>
+    </div>
+</div>
+
+<div *ngIf="error" class="alert alert-danger">
+    <strong>Error! </strong> {{errorMessage}}
+    <hr>
+    <button (click)="loadData()" type="button" class="btn btn-secondary">Reload</button>
+</div>
