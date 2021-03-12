@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Horse } from "src/app/dto/horse";
 import { Sport } from "src/app/dto/sport";
 
@@ -11,16 +11,22 @@ export class HorseFormComponent implements OnInit {
   @Input() horse: Horse;
   @Input() horses: Horse[];
   @Input() sports: Sport[];
-  @Input() readonly: boolean;
+  @Input() buttonName: String;
+  @Output() submited = new EventEmitter<Horse>();
 
-  horseFather: Horse;
-  horseMother: Horse;
-  horseSport: Sport;
+  maleHorses: Horse[] = [];
+  femaleHorses: Horse[] = [];
 
   constructor() {}
 
   ngOnInit(): void {
-    this.horseFather = this.horse;
-    this.horseMother = this.horse;
+    this.horses.forEach((horse) => {
+      if (horse.sex == "male") this.maleHorses.push(horse);
+      if (horse.sex == "female") this.femaleHorses.push(horse);
+    });
+  }
+
+  private onSubmit() {
+    this.submited.emit(this.horse);
   }
 }
