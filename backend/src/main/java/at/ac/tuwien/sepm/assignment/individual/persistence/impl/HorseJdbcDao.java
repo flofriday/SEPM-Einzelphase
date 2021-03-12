@@ -10,11 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.lang.invoke.MethodHandles;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @Repository
@@ -56,6 +57,50 @@ public class HorseJdbcDao implements HorseDao {
             throw new PersistenceException(e);
         }
         return horses;
+    }
+
+    @Override
+    public Horse add(Horse horse) {
+        LOGGER.trace("add({})", horse);
+        final String sql = "INSERT INTO " + TABLE_NAME +
+            " (name, description, birthday, sex, favoriteSport, mother, father) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        try {
+            //sports = jdbcTemplate.query(sql, this::mapRow, sport.getName(), sport.getDescription());
+            jdbcTemplate.update(connection -> {
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stmt.setString(1, horse.getName());
+                stmt.setString(2, horse.getDescription());
+                stmt.setDate(3, Date.valueOf(horse.getBirthDay()));
+                stmt.setString(4, horse.getSex().toString());
+
+                if (horse.getFavoriteSportId() != null) {
+                    stmt.setLong(5, horse.getFavoriteSportId());
+                } else {
+                    stmt.setNull(5, Types.BIGINT);
+                }
+
+                if (horse.getMotherId() != null) {
+                    stmt.setLong(6, horse.getMotherId());
+                } else {
+                    stmt.setNull(6, Types.BIGINT);
+                }
+
+                if (horse.getFatherId() != null) {
+                    stmt.setLong(7, horse.getFatherId());
+                } else {
+                    stmt.setNull(7, Types.BIGINT);
+                }
+
+                return stmt;
+            }, keyHolder);
+        } catch (DataAccessException e) {
+            throw new PersistenceException(e);
+        }
+
+        horse.setId(((Number) keyHolder.getKeys().get("id")).longValue());
+        return horse;
     }
 
     private Long getLongObject(ResultSet resultSet, String field) throws SQLException {

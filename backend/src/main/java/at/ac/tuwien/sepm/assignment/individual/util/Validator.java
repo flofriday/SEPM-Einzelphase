@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.util;
 
+import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
 import java.lang.invoke.MethodHandles;
 
@@ -30,5 +31,14 @@ public class Validator {
         if (sport.getDescription() != null && sport.getDescription().length() > 1024) {
             throw new ValidationException("The sport description can only have 1024 characters.");
         }
+    }
+
+    public void validateNewHorse(Horse horse) throws ValidationException {
+        if (horse.getId() != null) {
+            throw new ValidationException("A new horse cannot already have an id.");
+        }
+
+        // TODO: Add missing validation
+        // Note: We could now call the validateUpdatedHorse() method
     }
 }

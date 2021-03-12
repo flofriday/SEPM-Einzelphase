@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
+import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
 import at.ac.tuwien.sepm.assignment.individual.util.Validator;
@@ -42,6 +43,27 @@ public class HorseServiceImpl implements HorseService {
         LOGGER.trace("getall()");
         try {
             return dao.getAll();
+        } catch (PersistenceException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Horse add(Horse horse) throws ValidationException {
+        LOGGER.trace("add({})", horse);
+
+        // The sport has to be valid
+        validator.validateNewHorse(horse);
+
+        // Remove leading and trailing whitespaces
+        horse.setName(horse.getName().strip());
+        horse.setDescription(horse.getDescription().strip());
+
+        // Description should not be an empty string but null
+        if (horse.getDescription().isEmpty()) horse.setDescription(null);
+
+        try {
+            return dao.add(horse);
         } catch (PersistenceException e) {
             throw new ServiceException(e.getMessage(), e);
         }
