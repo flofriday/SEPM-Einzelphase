@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.util;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.entity.Sex;
 import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
 import java.lang.invoke.MethodHandles;
 
@@ -47,6 +48,7 @@ public class Validator {
     }
 
     public void validateNewHorse(Horse horse) throws ValidationException {
+        LOGGER.trace("validateNewHorse({})", horse);
         if (horse.getId() != null) {
             throw new ValidationException("A new horse cannot already have an id.");
         }
@@ -55,6 +57,7 @@ public class Validator {
     }
 
     public void validateUpdatedHorse(Horse horse) throws ValidationException {
+        LOGGER.trace("validateUpdatedHorse({})", horse);
 
         // Validate the name and description
         if (horse.getName() == null || horse.getName().strip().isEmpty())
@@ -78,6 +81,9 @@ public class Validator {
         }
 
         // Validate the parents
+        if (horse.getId() != null && (horse.getId() == horse.getFatherId() || horse.getId() == horse.getMotherId()))
+            throw new ValidationException("The horse cannot be its own parent.");
+
         if (horse.getMotherId() != null) {
             Horse mother;
             try {
@@ -88,8 +94,11 @@ public class Validator {
                 throw new ValidationException(e);
             }
 
+            if (mother.getSex() != Sex.female)
+                throw new ValidationException("The mother of a horse must be female.");
+
             if (mother.getBirthDay().isAfter(horse.getBirthDay()))
-                throw new ValidationException("The horse cannot be older than its own mother");
+                throw new ValidationException("The horse cannot be older than its own mother.");
         }
 
         if (horse.getFatherId() != null) {
@@ -102,8 +111,11 @@ public class Validator {
                 throw new ValidationException(e);
             }
 
+            if (father.getSex() != Sex.male)
+                throw new ValidationException("The father of a horse must be male.");
+
             if (father.getBirthDay().isAfter(horse.getBirthDay()))
-                throw new ValidationException("The horse cannot be older than its own father");
+                throw new ValidationException("The horse cannot be older than its own father.");
         }
     }
 }

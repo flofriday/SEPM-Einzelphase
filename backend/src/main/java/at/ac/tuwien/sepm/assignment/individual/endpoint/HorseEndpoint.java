@@ -47,14 +47,24 @@ public class HorseEndpoint {
         return horseMapper.entityListToDto(horseService.getAll());
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "")
     public HorseDto add(@RequestBody HorseDto horseDto) {
         LOGGER.info("POST " + BASE_URL);
-        Horse horse = horseMapper.dtoToEntity(horseDto);
+
+        Horse horse;
+        try {
+            horse = horseMapper.dtoToEntity(horseDto);
+        } catch (Exception e) {
+            // TODO: Is this the right response?
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
         try {
             return horseMapper.entityToDto(horseService.add(horse));
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "Error during validating the new horse", e);
+            String message = "Error during validating the new horse: " + e.getMessage();
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, message, e);
         }
     }
 }

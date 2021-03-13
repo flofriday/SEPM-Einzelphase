@@ -54,7 +54,8 @@ public class SportEndpoint {
         try {
             return sportMapper.entityToDto(sportService.add(sport));
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "Error during validating the new sport", e);
+            String message = "Error during validating the new horse: " + e.getMessage();
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, message, e);
         }
     }
 }
