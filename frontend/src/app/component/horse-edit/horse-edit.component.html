@@ -1,0 +1,10 @@
+<h1 class="display-4" style="margin: 20px 0">Edit Horse</h1>
+
+<div *ngIf="error" class="alert alert-danger">
+    <strong>Error! </strong> {{errorMessage}}
+</div>
+
+<app-horse-form *ngIf="horses && sports" [horse]="horse" [horses]="horses" [sports]="sports" [buttonName]="'Update'"
+    (submited)="onSubmited($event)">
+
+</app-horse-form>

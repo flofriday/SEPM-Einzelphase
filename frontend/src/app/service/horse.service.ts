@@ -39,4 +39,14 @@ export class HorseService {
     console.log("Create new horse " + horse);
     return this.httpClient.post<Horse>(baseUri, horse);
   }
+
+  /**
+   * Update an existing horse.
+   *
+   * @param horse to update.
+   */
+  updateHorse(horse: Horse): Observable<Horse> {
+    console.log("Update the horse " + horse);
+    return this.httpClient.put<Horse>(baseUri, horse);
+  }
 }
