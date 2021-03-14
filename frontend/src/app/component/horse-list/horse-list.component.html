@@ -5,16 +5,7 @@
 
     <div *ngIf="horses$ | async" class="row">
         <div *ngFor="let horse of horses$ | async" class="col-md-6" style="padding-bottom: 20px;">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{horse.name}}</h5>
-                    <p *ngIf="horse.description" class="card-text">{{horse.description}}</p>
-                    <p *ngIf="!horse.description" class="card-text"><i>no description available</i></p>
-                    <a routerLink="{{horse.id}}" class="card-link">Details</a>
-                    <a routerLink="{{horse.id}}/edit" class="card-link">Edit</a>
-                    <a class="card-link">Delete</a>
-                </div>
-            </div>
+            <app-horse-card [horse]="horse"></app-horse-card>
         </div>
     </div>
 
