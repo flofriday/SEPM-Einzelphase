@@ -68,4 +68,25 @@ public class HorseServiceImpl implements HorseService {
             throw new ServiceException(e.getMessage(), e);
         }
     }
+
+    @Override
+    public Horse update(Horse horse) throws ValidationException {
+        LOGGER.trace("update({})", horse);
+
+        // The sport has to be valid
+        validator.validateUpdatedHorse(horse);
+
+        // Remove leading and trailing whitespaces
+        horse.setName(horse.getName().strip());
+        horse.setDescription(horse.getDescription().strip());
+
+        // Description should not be an empty string but null
+        if (horse.getDescription().isEmpty()) horse.setDescription(null);
+
+        try {
+            return dao.update(horse);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
 }

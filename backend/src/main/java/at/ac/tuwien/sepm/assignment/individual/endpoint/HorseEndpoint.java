@@ -67,4 +67,24 @@ public class HorseEndpoint {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, message, e);
         }
     }
+
+    @PutMapping(value = "")
+    public HorseDto update(@RequestBody HorseDto horseDto) {
+        LOGGER.info("PUT " + BASE_URL);
+
+        Horse horse;
+        try {
+            horse = horseMapper.dtoToEntity(horseDto);
+        } catch (Exception e) {
+            // TODO: Is this the right response?
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            return horseMapper.entityToDto(horseService.update(horse));
+        } catch (ValidationException e) {
+            String message = "Error during validating the new horse: " + e.getMessage();
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, message, e);
+        }
+    }
 }

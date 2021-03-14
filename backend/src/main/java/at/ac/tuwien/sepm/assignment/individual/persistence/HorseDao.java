@@ -34,4 +34,14 @@ public interface HorseDao {
      * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data store.
      */
     Horse add(Horse horse);
+
+    /**
+     * Update an exisitng horse.
+     *
+     * @param horse to update.
+     * @return the horse updated, which might be slightly changed from the horse param.
+     * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data store.
+     */
+    Horse update(Horse horse);
+
 }

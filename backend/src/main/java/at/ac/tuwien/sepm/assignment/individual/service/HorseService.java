@@ -37,4 +37,14 @@ public interface HorseService {
      */
     Horse add(Horse horse) throws ValidationException;
 
+    /**
+     * Update an existing horse.
+     *
+     * @param horse to update.
+     * @return a modified version of the horse parameter, how it was actually stored.
+     * @throws ValidationException if the input is not valid.
+     * @throws ServiceException  if something goes wrong during data processing.
+     */
+    Horse update(Horse horse) throws ValidationException;
+
 }

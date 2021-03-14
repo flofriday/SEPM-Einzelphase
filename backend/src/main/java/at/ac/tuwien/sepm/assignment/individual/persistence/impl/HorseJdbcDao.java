@@ -103,6 +103,31 @@ public class HorseJdbcDao implements HorseDao {
         return horse;
     }
 
+    @Override
+    public Horse update(Horse horse) {
+        LOGGER.trace("update({})", horse);
+        final String sql = "UPDATE " + TABLE_NAME +
+            " SET name=?, description=?, birthday=?, sex=?, favoriteSport=?, mother=?, father=?" +
+            "WHERE id=?";
+        //KeyHolder keyHolder = new GeneratedKeyHolder();
+        try {
+            jdbcTemplate.update(sql,
+                horse.getName(),
+                horse.getDescription(),
+                horse.getBirthDay().toString(),
+                horse.getSex().toString(),
+                horse.getFavoriteSportId(),
+                horse.getMotherId(),
+                horse.getFatherId(),
+                horse.getId()
+            );
+        } catch (DataAccessException e) {
+            throw new PersistenceException(e);
+        }
+
+        return horse;
+    }
+
     private Long getLongObject(ResultSet resultSet, String field) throws SQLException {
         Object obj = resultSet.getObject(field);
         if (obj == null) return null;
