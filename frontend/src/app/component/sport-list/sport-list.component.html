@@ -3,8 +3,8 @@
 <div *ngIf="!error">
     <a role="button" class="btn btn-primary" style="margin-bottom: 20px;" routerLink="new">New Sport</a>
 
-    <div *ngIf="sports" class="row">
-        <div *ngFor="let sport of sports" class="col-md-4" style="padding-bottom: 20px;">
+    <div *ngIf="sports$ | async" class="row">
+        <div *ngFor="let sport of sports$ | async" class="col-md-4" style="padding-bottom: 20px;">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{sport.name}}</h5>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <p *ngIf="!sports"><i>There are no sports yet.</i></p>
+    <p *ngIf="!sports$ | async"><i>There are no sports yet.</i></p>
 </div>
 
 <div *ngIf="error" class="alert alert-danger">

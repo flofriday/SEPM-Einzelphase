@@ -3,8 +3,8 @@
 <div *ngIf="!error">
     <a role="button" class="btn btn-primary" style="margin-bottom: 20px;" routerLink="new">New Horse</a>
 
-    <div *ngIf="horses" class="row">
-        <div *ngFor="let horse of horses" class="col-md-6" style="padding-bottom: 20px;">
+    <div *ngIf="horses$ | async" class="row">
+        <div *ngFor="let horse of horses$ | async" class="col-md-6" style="padding-bottom: 20px;">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{horse.name}}</h5>
@@ -14,21 +14,11 @@
                     <a routerLink="{{horse.id}}/edit" class="card-link">Edit</a>
                     <a class="card-link">Delete</a>
                 </div>
-                <!--
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Birth: {{horse.birthDay}}</li>
-                    <li class="list-group-item">Sex: {{horse.sex}}</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-                -->
             </div>
         </div>
     </div>
 
-    <p *ngIf="!horses"><i>There are no horses yet.</i></p>
+    <p *ngIf="!horses$ | async"><i>There are no horses yet.</i></p>
 </div>
 
 <div *ngIf="error" class="alert alert-danger">

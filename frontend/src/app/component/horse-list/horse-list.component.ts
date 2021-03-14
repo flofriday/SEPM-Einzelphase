@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { Observable, throwError } from "rxjs";
 import { Horse } from "src/app/dto/horse";
 import { HorseService } from "src/app/service/horse.service";
+import { catchError } from "rxjs/operators";
 
 @Component({
   selector: "app-horse-list",
@@ -10,7 +12,7 @@ import { HorseService } from "src/app/service/horse.service";
 export class HorseListComponent implements OnInit {
   error = false;
   errorMessage = "";
-  horses: Horse[];
+  horses$: Observable<Horse[]>;
 
   constructor(private horseService: HorseService) {}
 
@@ -21,13 +23,11 @@ export class HorseListComponent implements OnInit {
   private loadHorses() {
     this.error = false;
     this.errorMessage = "";
-    this.horseService.getAllHorses().subscribe(
-      (horses: Horse[]) => {
-        this.horses = horses;
-      },
-      (error) => {
-        this.defaultServiceErrorHandling(error);
-      }
+    this.horses$ = this.horseService.getAllHorses().pipe(
+      catchError((err) => {
+        this.defaultServiceErrorHandling(err);
+        return throwError(err);
+      })
     );
   }
 

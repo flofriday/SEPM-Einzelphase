@@ -25,7 +25,7 @@
     <div class="form-group">
         <label for="sport">Favorite Sport (optional)</label>
         <select class="form-control" id="sport" [(ngModel)]="horse.favoriteSportId" name="sport">
-            <option [value]="null"> <i>"none"</i> </option>
+            <option [value]="null">-- Choose an option --</option>
             <option *ngFor="let sport of sports" [value]="sport.id">{{sport.name}}</option>
         </select>
     </div>
@@ -33,7 +33,7 @@
     <div class="form-group">
         <label for="father">Father (optional)</label>
         <select class="form-control" id="father" [(ngModel)]="horse.fatherId" name="father">
-            <option [value]="null"> <i>"none"</i> </option>
+            <option [value]="null">-- Choose an option --</option>
             <option *ngFor="let horse of maleHorses" [value]="horse.id">{{horse.name}}</option>
         </select>
     </div>
@@ -41,7 +41,7 @@
     <div class="form-group">
         <label for="mother">Mother (optional)</label>
         <select class="form-control" id="father" [(ngModel)]="horse.motherId" name="mother">
-            <option [value]="null"> <i>"none"</i> </option>
+            <option [value]="null">-- Choose an option --</option>
             <option *ngFor="let horse of femaleHorses" [value]="horse.id">{{horse.name}}</option>
         </select>
     </div>
