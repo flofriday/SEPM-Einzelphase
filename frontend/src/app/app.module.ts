@@ -13,7 +13,10 @@ import { HorseListComponent } from "./component/horse-list/horse-list.component"
 import { HorseFormComponent } from "./component/horse-form/horse-form.component";
 import { HorseDetailComponent } from "./component/horse-detail/horse-detail.component";
 import { HorseNewComponent } from "./component/horse-new/horse-new.component";
-import { HorseEditComponent } from './component/horse-edit/horse-edit.component';
+import { HorseEditComponent } from "./component/horse-edit/horse-edit.component";
+import { HorseCardComponent } from "./component/horse-card/horse-card.component";
+import { SportCardComponent } from "./component/sport-card/sport-card.component";
+import { HorseDeleteComponent } from "./component/horse-delete/horse-delete.component";
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { HorseEditComponent } from './component/horse-edit/horse-edit.component'
     HorseDetailComponent,
     HorseNewComponent,
     HorseEditComponent,
+    HorseCardComponent,
+    SportCardComponent,
+    HorseDeleteComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],

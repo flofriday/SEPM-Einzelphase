@@ -47,6 +47,16 @@ export class HorseService {
    */
   updateHorse(horse: Horse): Observable<Horse> {
     console.log("Update the horse " + horse);
-    return this.httpClient.put<Horse>(baseUri, horse);
+    return this.httpClient.put<Horse>(baseUri + "/" + horse.id, horse);
+  }
+
+  /**
+   * Update an existing horse.
+   *
+   * @param horse to update.
+   */
+  deleteHorse(id: number): Observable<Horse> {
+    console.log("Delete the horse " + id);
+    return this.httpClient.delete<Horse>(baseUri + "/" + id);
   }
 }

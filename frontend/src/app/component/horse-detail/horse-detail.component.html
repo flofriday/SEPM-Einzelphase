@@ -5,37 +5,48 @@
 </app-horse-form>
 -->
 
-<div *ngIf="!error && horse" class="card mx-auto" style="max-width: 32rem;">
+<div *ngIf="!error && horse" class="card mx-auto" style="max-width: 32rem">
     <div class="card-body">
-        <h5 class="card-title">{{horse.name}}</h5>
-        <p *ngIf="horse.description" class="card-text">{{horse.description}}</p>
+        <h5 class="card-title">{{ horse.name }}</h5>
+        <p *ngIf="horse.description" class="card-text">{{ horse.description }}</p>
         <p *ngIf="!horse.description" class="card-text"><i>no description</i></p>
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item"><strong>Birthdate: </strong> {{horse.birthDay}}</li>
-        <li class="list-group-item"><strong>Sex: </strong> {{horse.sex}}</li>
-        <li class="list-group-item"><strong>Favorite Sport: </strong>
-            <span *ngIf="sport">{{sport.name}}</span>
+        <li class="list-group-item">
+            <strong>Birthdate: </strong> {{ horse.birthDay }}
+        </li>
+        <li class="list-group-item"><strong>Sex: </strong> {{ horse.sex }}</li>
+        <li class="list-group-item">
+            <strong>Favorite Sport: </strong>
+            <span *ngIf="sport">{{ sport.name }}</span>
             <i *ngIf="!horse.favoriteSportId">not set</i>
         </li>
-        <li class="list-group-item"><strong>mother: </strong>
-            <a [routerLink]="['/horses', horse.motherId]" *ngIf="mother">{{mother.name}}</a>
+        <li class="list-group-item">
+            <strong>mother: </strong>
+            <a [routerLink]="['/horses', horse.motherId]" *ngIf="mother">{{
+                mother.name
+                }}</a>
             <i *ngIf="!horse.motherId">not set</i>
         </li>
-        <li class="list-group-item"><strong>father: </strong>
-            <span *ngIf="father">{{father.name}}</span>
+        <li class="list-group-item">
+            <strong>father: </strong>
+            <a [routerLink]="['/horses', horse.fatherId]" *ngIf="father">{{
+                father.name
+                }}</a>
             <i *ngIf="!horse.fatherId">not set</i>
         </li>
     </ul>
     <div class="card-body">
-        <a href="#" class="card-link">Family Tree</a>
-        <a routerLink="edit" class="card-link">Edit</a>
-        <a href="#" class="card-link">Delete</a>
+        <a href="#" class="btn btn-outline-primary btn-sm mr-1">Family Tree</a>
+        <a routerLink="edit" class="btn btn-outline-primary btn-sm mr-1">Edit</a>
+        <a routerLink="delete" class="btn btn-outline-danger btn-sm mr-1">Delete</a>
     </div>
 </div>
 
 <div *ngIf="error" class="alert alert-danger">
-    <strong>Error! </strong> {{errorMessage}}
-    <hr>
-    <button (click)="loadData()" type="button" class="btn btn-secondary">Reload</button>
+    <strong>Error! </strong> {{ errorMessage }}
+    <hr />
+    <button (click)="loadData()" type="button" class="btn btn-secondary">
+        Reload
+    </button>
 </div>

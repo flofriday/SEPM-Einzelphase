@@ -3,13 +3,9 @@
         <h5 class="card-title">{{horse.name}}</h5>
         <p *ngIf="horse.description" class="card-text">{{horse.description}}</p>
         <p *ngIf="!horse.description" class="card-text"><i>no description available</i></p>
-        <a routerLink="{{horse.id}}" class="card-link">Details</a>
-        <a routerLink="{{horse.id}}/edit" class="card-link">Edit</a>
-        <a class="card-link">Delete</a>
-        <!--
+
         <a routerLink="{{horse.id}}" class="btn btn-outline-primary btn-sm mr-1">Details</a>
         <a routerLink="{{horse.id}}/edit" class="btn btn-outline-primary btn-sm mr-1">Edit</a>
-        <a class="btn btn-outline-danger btn-sm">Delete</a>
-        -->
+        <a routerLink="{{horse.id}}/delete" class="btn btn-outline-danger btn-sm mr-1">Delete</a>
     </div>
 </div>

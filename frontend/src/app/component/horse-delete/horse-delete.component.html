@@ -1,0 +1,15 @@
+<h1 class="display-4" style="margin: 20px 0">Delete Horse</h1>
+
+<div *ngIf="error" class="alert alert-danger">
+    <strong>Error! </strong> {{errorMessage}}
+</div>
+
+<div *ngIf="horse$ | async as horse">
+    <h3 class="card-title">Are you sure?</h3>
+    <p class="card-text">Deleting <a [routerLink]="['/horses', horse.id]">{{horse.name}}</a>
+        cannot
+        be undone!</p>
+
+    <a routerLink="/horses" class="btn btn-secondary mr-1">Cancle</a>
+    <button [disabled]="error" (click)="delete()" class="btn btn-danger mr-1">Delete</button>
+</div>
