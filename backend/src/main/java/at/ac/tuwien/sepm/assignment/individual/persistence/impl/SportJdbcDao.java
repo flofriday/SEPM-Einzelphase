@@ -68,7 +68,6 @@ public class SportJdbcDao implements SportDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         try {
-            //sports = jdbcTemplate.query(sql, this::mapRow, sport.getName(), sport.getDescription());
             jdbcTemplate.update(connection -> {
                 PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 stmt.setString(1, sport.getName());

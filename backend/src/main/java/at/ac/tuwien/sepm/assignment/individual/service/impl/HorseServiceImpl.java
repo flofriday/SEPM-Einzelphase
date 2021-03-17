@@ -52,15 +52,17 @@ public class HorseServiceImpl implements HorseService {
     public Horse add(Horse horse) throws ValidationException {
         LOGGER.trace("add({})", horse);
 
-        // The sport has to be valid
+        // The horse has to be valid
         validator.validateNewHorse(horse);
 
         // Remove leading and trailing whitespaces
         horse.setName(horse.getName().strip());
-        horse.setDescription(horse.getDescription().strip());
+        if (horse.getDescription() != null)
+            horse.setDescription(horse.getDescription().strip());
 
         // Description should not be an empty string but null
-        if (horse.getDescription().isEmpty()) horse.setDescription(null);
+        if (horse.getDescription() != null && horse.getDescription().isEmpty())
+            horse.setDescription(null);
 
         try {
             return dao.add(horse);
@@ -73,18 +75,33 @@ public class HorseServiceImpl implements HorseService {
     public Horse update(Horse horse) throws ValidationException {
         LOGGER.trace("update({})", horse);
 
-        // The sport has to be valid
+        // The horse has to be valid
         validator.validateUpdatedHorse(horse);
-
         // Remove leading and trailing whitespaces
         horse.setName(horse.getName().strip());
-        horse.setDescription(horse.getDescription().strip());
+        if (horse.getDescription() != null)
+            horse.setDescription(horse.getDescription().strip());
 
         // Description should not be an empty string but null
-        if (horse.getDescription().isEmpty()) horse.setDescription(null);
+        if (horse.getDescription() != null && horse.getDescription().isEmpty())
+            horse.setDescription(null);
 
         try {
             return dao.update(horse);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void deleteById(Long id) throws ValidationException, NotFoundException {
+        LOGGER.trace("update({})");
+
+        // The horse must be ok to delete
+        validator.validateDeletedHorse(id);
+
+        try {
+            dao.delete(id);
         } catch (PersistenceException e) {
             throw new ServiceException(e.getMessage(), e);
         }

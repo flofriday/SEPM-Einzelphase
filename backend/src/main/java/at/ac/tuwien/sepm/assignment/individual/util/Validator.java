@@ -67,7 +67,7 @@ public class Validator {
         if (horse.getName().length() > 256)
             throw new ValidationException("The horse name can only have 256 characters.");
 
-        if (horse.getDescription().length() > 1024)
+        if (horse.getDescription() != null && horse.getDescription().length() > 1024)
             throw new ValidationException("The horse description can only have 1024 characters.");
 
         // Validate the favorite sport
