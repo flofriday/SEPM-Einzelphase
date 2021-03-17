@@ -68,13 +68,15 @@ public class HorseEndpoint {
         }
     }
 
-    @PutMapping(value = "")
-    public HorseDto update(@RequestBody HorseDto horseDto) {
-        LOGGER.info("PUT " + BASE_URL);
+    @PutMapping(value = "/{id}")
+    public HorseDto update(@PathVariable("id") Long id, @RequestBody HorseDto horseDto) {
+        LOGGER.info("PUT " + BASE_URL + "/{}", id);
 
         Horse horse;
         try {
+            // TODO: that dowsn't seam right
             horse = horseMapper.dtoToEntity(horseDto);
+            horse.setId(id);
         } catch (Exception e) {
             // TODO: Is this the right response?
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -85,6 +87,20 @@ public class HorseEndpoint {
         } catch (ValidationException e) {
             String message = "Error during validating the new horse: " + e.getMessage();
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, message, e);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(value = "/{id}")
+    public void deleteById(@PathVariable("id") Long id) {
+        LOGGER.info("DELETE " + BASE_URL + "/{}", id);
+        try {
+            horseService.deleteById(id);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
+        } catch (ValidationException e) {
+            String message = e.getMessage();
+            throw new ResponseStatusException(HttpStatus.CONFLICT, message, e);
         }
     }
 }

@@ -27,6 +27,14 @@ public interface HorseDao {
     List<Horse> getAll();
 
     /**
+     * Get all children from a horse from the database.
+     *
+     * @return a list with the children.
+     * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data storage.
+     */
+    List<Horse> getChildren(Horse horse);
+
+    /**
      * Add a new horse.
      *
      * @param horse to add to the database.
@@ -43,5 +51,13 @@ public interface HorseDao {
      * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data store.
      */
     Horse update(Horse horse);
+
+    /**
+     * Delete an exisitng horse.
+     *
+     * @param id of the horse ot delete.
+     * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data store.
+     */
+    void delete(long id);
 
 }

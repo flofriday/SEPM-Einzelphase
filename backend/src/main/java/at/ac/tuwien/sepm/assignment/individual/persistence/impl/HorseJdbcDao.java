@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.lang.invoke.MethodHandles;
 import java.sql.*;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class HorseJdbcDao implements HorseDao {
@@ -53,6 +54,21 @@ public class HorseJdbcDao implements HorseDao {
 
         try {
             horses = jdbcTemplate.query(sql, this::mapRow);
+        } catch (DataAccessException e) {
+            throw new PersistenceException(e);
+        }
+        return horses;
+    }
+
+    @Override
+    public List<Horse> getChildren(Horse horse) {
+        LOGGER.trace("getChildren({})", horse);
+        final String sql = "SELECT * FROM " + TABLE_NAME +
+            " WHERE father=? OR mother=?";
+        List<Horse> horses;
+
+        try {
+            horses = jdbcTemplate.query(sql, this::mapRow, horse.getId(), horse.getId());
         } catch (DataAccessException e) {
             throw new PersistenceException(e);
         }
@@ -126,6 +142,29 @@ public class HorseJdbcDao implements HorseDao {
         }
 
         return horse;
+    }
+
+    @Override
+    public void delete(long id) {
+        LOGGER.trace("delete({})", id);
+        final String sql = "DELETE FROM " + TABLE_NAME +
+            " WHERE id=?";
+        int affectedRows;
+
+        try {
+            affectedRows = jdbcTemplate.update(connection -> {
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stmt.setLong(1, id);
+                return stmt;
+            });
+        } catch (DataAccessException e) {
+            throw new PersistenceException(e);
+        }
+
+        if (affectedRows <= 0) {
+            throw new PersistenceException("No row was deleted.");
+        }
+
     }
 
     private Long getLongObject(ResultSet resultSet, String field) throws SQLException {

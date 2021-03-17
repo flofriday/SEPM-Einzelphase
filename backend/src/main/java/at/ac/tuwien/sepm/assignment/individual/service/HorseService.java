@@ -47,4 +47,14 @@ public interface HorseService {
      */
     Horse update(Horse horse) throws ValidationException;
 
+    /**
+     * Delete the horse with a given ID.
+     *
+     * @param id of the horse to delete.
+     * @return the horse with the specified id.
+     * @throws ServiceException  if something goes wrong during data processing.
+     * @throws NotFoundException if the horse could not be found in the system.
+     * @throws ValidationException if the input cannot be deleted.
+     */
+    void deleteById(Long id) throws NotFoundException, ValidationException;
 }

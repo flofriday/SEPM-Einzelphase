@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Sex;
 import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
@@ -116,6 +117,33 @@ public class Validator {
 
             if (father.getBirthDay().isAfter(horse.getBirthDay()))
                 throw new ValidationException("The horse cannot be older than its own father.");
+        }
+
+
+    }
+
+    public void validateDeletedHorse(Long id) throws ValidationException, NotFoundException {
+        Horse horse;
+        try {
+            horse = horseDao.getOneById(id);
+        } catch (PersistenceException e) {
+            throw new ValidationException(e);
+        }
+
+        List<Horse> children;
+        try {
+            children = horseDao.getChildren(horse);
+        } catch (PersistenceException e) {
+            throw new ValidationException(e);
+        }
+
+        if (children.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (Horse child: children ) {
+                sb.append(child.getName()).append(", ");
+            }
+            String message = "You cannot delete a horse that has children. This horse has the following children: " + sb.toString();
+            throw new ValidationException(message);
         }
     }
 }
