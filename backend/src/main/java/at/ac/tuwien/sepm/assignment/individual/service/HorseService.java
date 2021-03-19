@@ -45,7 +45,7 @@ public interface HorseService {
      * @throws ValidationException if the input is not valid.
      * @throws ServiceException  if something goes wrong during data processing.
      */
-    Horse update(Horse horse) throws ValidationException;
+    Horse update(Horse horse) throws ValidationException, NotFoundException;
 
     /**
      * Delete the horse with a given ID.

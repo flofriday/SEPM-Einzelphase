@@ -48,17 +48,8 @@ public class Validator {
         }
     }
 
-    public void validateNewHorse(Horse horse) throws ValidationException {
-        LOGGER.trace("validateNewHorse({})", horse);
-        if (horse.getId() != null) {
-            throw new ValidationException("A new horse cannot already have an id.");
-        }
-
-        validateUpdatedHorse(horse);
-    }
-
-    public void validateUpdatedHorse(Horse horse) throws ValidationException {
-        LOGGER.trace("validateUpdatedHorse({})", horse);
+    private void validateHorse(Horse horse) throws ValidationException {
+        LOGGER.trace("validateHorse({})", horse);
 
         // Validate the name and description
         if (horse.getName() == null || horse.getName().strip().isEmpty())
@@ -118,7 +109,36 @@ public class Validator {
             if (father.getBirthDay().isAfter(horse.getBirthDay()))
                 throw new ValidationException("The horse cannot be older than its own father.");
         }
+    }
 
+    public void validateNewHorse(Horse horse) throws ValidationException {
+        LOGGER.trace("validateNewHorse({})", horse);
+        if (horse.getId() != null) {
+            throw new ValidationException("A new horse cannot already have an id.");
+        }
+
+        validateHorse(horse);
+    }
+
+    public void validateUpdatedHorse(Horse horse) throws ValidationException, NotFoundException {
+        LOGGER.trace("validateHorse({})", horse);
+        validateHorse(horse);
+
+
+        // The sex cannot change if the horse has children
+        Horse oldHorse = horseDao.getOneById(horse.getId());
+        if (horse.getSex() != oldHorse.getSex()) {
+            List<Horse> children = horseDao.getChildren(oldHorse);
+            if (!children.isEmpty()) {
+                //TODO: fix the trailing comma
+                StringBuilder sb = new StringBuilder();
+                for (Horse child: children ) {
+                    sb.append(child.getName()).append(", ");
+                }
+                String message = "You cannot change the sex of a horse that has children. This horse has the following children: " + sb.toString();
+                throw new ValidationException(message);
+            }
+        }
 
     }
 
@@ -138,6 +158,7 @@ public class Validator {
         }
 
         if (children.size() > 0) {
+            //TODO: fix the trailing comma
             StringBuilder sb = new StringBuilder();
             for (Horse child: children ) {
                 sb.append(child.getName()).append(", ");

@@ -37,7 +37,7 @@ public class HorseEndpoint {
         try {
             return horseMapper.entityToDto(horseService.getOneById(id));
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
@@ -63,8 +63,7 @@ public class HorseEndpoint {
         try {
             return horseMapper.entityToDto(horseService.add(horse));
         } catch (ValidationException e) {
-            String message = "Error during validating the new horse: " + e.getMessage();
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, message, e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
         }
     }
 
@@ -85,8 +84,9 @@ public class HorseEndpoint {
         try {
             return horseMapper.entityToDto(horseService.update(horse));
         } catch (ValidationException e) {
-            String message = "Error during validating the new horse: " + e.getMessage();
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, message, e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
@@ -97,7 +97,7 @@ public class HorseEndpoint {
         try {
             horseService.deleteById(id);
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         } catch (ValidationException e) {
             String message = e.getMessage();
             throw new ResponseStatusException(HttpStatus.CONFLICT, message, e);
