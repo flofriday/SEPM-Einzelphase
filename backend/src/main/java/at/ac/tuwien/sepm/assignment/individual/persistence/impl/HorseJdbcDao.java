@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import java.lang.invoke.MethodHandles;
 import java.sql.*;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class HorseJdbcDao implements HorseDao {
@@ -47,13 +46,24 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public List<Horse> getAll() {
-        LOGGER.trace("getAll()");
-        final String sql = "SELECT * FROM " + TABLE_NAME;
+    public List<Horse> search(Horse horse) {
+        LOGGER.trace("search()");
+        final String sql = "SELECT * FROM " + TABLE_NAME +
+            " WHERE (? IS NULL OR LOWER(name) LIKE LOWER(?))" +
+            " AND (? IS NULL OR LOWER(description) LIKE LOWER(?))" +
+            " AND (? IS NULL OR birthday < ?)" +
+            " AND (? IS NULL OR sex = ?)" +
+            " AND (? IS NULL OR favoriteSport = ?)";
         List<Horse> horses;
 
+        String sex = horse.getSex() == null ? null : horse.getSex().toString();
         try {
-            horses = jdbcTemplate.query(sql, this::mapRow);
+            horses = jdbcTemplate.query(sql, this::mapRow,
+                horse.getName(), "%" + horse.getName() + "%",
+                horse.getDescription(), "%" + horse.getDescription() + "%",
+                horse.getBirthDay(), horse.getBirthDay(),
+                sex, sex,
+                horse.getFavoriteSportId(), horse.getFavoriteSportId());
         } catch (DataAccessException e) {
             throw new PersistenceException(e);
         }

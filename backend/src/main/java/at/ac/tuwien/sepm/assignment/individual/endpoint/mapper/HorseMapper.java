@@ -35,8 +35,12 @@ public class HorseMapper {
         horse.setId(dto.getId());
         horse.setName(dto.getName());
         horse.setDescription(dto.getDescription());
-        horse.setBirthDay(LocalDate.parse(dto.getBirthDay()));
-        horse.setSex(Sex.valueOf(dto.getSex()));
+        if (dto.getBirthDay() != null) {
+            horse.setBirthDay(LocalDate.parse(dto.getBirthDay()));
+        }
+        if (dto.getSex() != null) {
+            horse.setSex(Sex.valueOf(dto.getSex()));
+        }
         horse.setFavoriteSportId(dto.getFavoriteSportId());
         horse.setMotherId(dto.getMotherId());
         horse.setFatherId(dto.getFatherId());

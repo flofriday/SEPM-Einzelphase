@@ -33,9 +33,9 @@ public class HorseServiceImpl implements HorseService {
     }
 
     @Override
-    public List<Horse> getAll() {
-        LOGGER.trace("getall()");
-        return dao.getAll();
+    public List<Horse> search(Horse horse) {
+        LOGGER.trace("search({})", horse);
+        return dao.search(horse);
     }
 
     @Override

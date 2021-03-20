@@ -22,13 +22,13 @@ public interface HorseService {
     Horse getOneById(Long id) throws NotFoundException;
 
     /**
-     * Gets all horses.
+     * Search horses.
      *
-     * @return a list with all horses.
+     * @return a list with all matching horses.
      * @throws PersistenceException if something goes wrong at the persitence layer.
      * @throws ServiceException     if something goes wrong during data processing.
      */
-    List<Horse> getAll();
+    List<Horse> search(Horse horse);
 
     /**
      * Add a new horse.

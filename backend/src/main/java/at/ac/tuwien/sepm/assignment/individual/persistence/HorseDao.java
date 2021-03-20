@@ -19,12 +19,15 @@ public interface HorseDao {
     Horse getOneById(Long id) throws NotFoundException;
 
     /**
-     * Get all horses from the database.
+     * Get a list of matching horses.
+     * A horse is considered matching if all parameters that are not null are the same. For strings the horse it the
+     * storage only has to contain the string in the entity object.
+     * Following fields will not be considered: id, motherID, fatherID
      *
-     * @return a list with all horses.
+     * @return a list with all horses that match the horse parameter.
      * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data storage.
      */
-    List<Horse> getAll();
+    List<Horse> search(Horse horse);
 
     /**
      * Get all children from a horse from the database.

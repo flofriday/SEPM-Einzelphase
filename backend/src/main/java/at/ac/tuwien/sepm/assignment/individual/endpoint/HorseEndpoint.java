@@ -37,14 +37,29 @@ public class HorseEndpoint {
         try {
             return horseMapper.entityToDto(horseService.getOneById(id));
         } catch (NotFoundException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
     @GetMapping(value = "")
-    public List<HorseDto> getAll() {
+    public List<HorseDto> getAll(HorseDto dto) {
         LOGGER.info("GET " + BASE_URL);
-        return horseMapper.entityListToDto(horseService.getAll());
+
+        Horse horse;
+        try {
+            horse = horseMapper.dtoToEntity(dto);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        if (horse == null) {
+            horse = new Horse();
+            LOGGER.info("null");
+        }
+
+        return horseMapper.entityListToDto(horseService.search(horse));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -57,12 +72,14 @@ public class HorseEndpoint {
             horse = horseMapper.dtoToEntity(horseDto);
         } catch (Exception e) {
             // TODO: Is this the right response?
+            LOGGER.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
         try {
             return horseMapper.entityToDto(horseService.add(horse));
         } catch (ValidationException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
         }
     }
@@ -78,14 +95,17 @@ public class HorseEndpoint {
             horse.setId(id);
         } catch (Exception e) {
             // TODO: Is this the right response?
+            LOGGER.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
         try {
             return horseMapper.entityToDto(horseService.update(horse));
         } catch (ValidationException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
         } catch (NotFoundException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
@@ -97,8 +117,10 @@ public class HorseEndpoint {
         try {
             horseService.deleteById(id);
         } catch (NotFoundException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         } catch (ValidationException e) {
+            LOGGER.error(e.getMessage(), e);
             String message = e.getMessage();
             throw new ResponseStatusException(HttpStatus.CONFLICT, message, e);
         }
