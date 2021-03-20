@@ -2,8 +2,6 @@ package at.ac.tuwien.sepm.assignment.individual.service.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
-import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.SportDao;
 import at.ac.tuwien.sepm.assignment.individual.service.SportService;
@@ -32,21 +30,13 @@ public class SportServiceImpl implements SportService {
     @Override
     public Sport getOneById(Long id) throws NotFoundException {
         LOGGER.trace("getOneById({})", id);
-        try {
-            return dao.getOneById(id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        return dao.getOneById(id);
     }
 
     @Override
     public List<Sport> getAll() {
         LOGGER.trace("getall()");
-        try {
-            return dao.getAll();
-        } catch (PersistenceException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        return dao.getAll();
     }
 
     @Override
@@ -63,11 +53,6 @@ public class SportServiceImpl implements SportService {
         // Description should not be an empty string but null
         if (sport.getDescription().isEmpty()) sport.setDescription(null);
 
-        try {
-            return dao.add(sport);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        return dao.add(sport);
     }
-
 }

@@ -3,11 +3,7 @@ package at.ac.tuwien.sepm.assignment.individual.util;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Sex;
 import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
-import java.lang.invoke.MethodHandles;
-import java.util.List;
-
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.SportDao;
@@ -15,6 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.lang.invoke.MethodHandles;
+import java.util.List;
+import java.util.StringJoiner;
 
 @Component
 public class Validator {
@@ -67,8 +67,6 @@ public class Validator {
                 sportDao.getOneById(horse.getFavoriteSportId());
             } catch (NotFoundException e) {
                 throw new ValidationException("The favorite sport of a horse must exist.");
-            } catch (PersistenceException e)  {
-                throw new ValidationException(e);
             }
         }
 
@@ -82,8 +80,6 @@ public class Validator {
                 mother = horseDao.getOneById(horse.getMotherId());
             } catch (NotFoundException e) {
                 throw new ValidationException("The mother of a horse must exist.");
-            } catch (PersistenceException e)  {
-                throw new ValidationException(e);
             }
 
             if (mother.getSex() != Sex.female)
@@ -98,9 +94,7 @@ public class Validator {
             try {
                 father = horseDao.getOneById(horse.getFatherId());
             } catch (NotFoundException e) {
-                throw new ValidationException("The mother of a horse must exist.");
-            } catch (PersistenceException e)  {
-                throw new ValidationException(e);
+                throw new ValidationException("The father of a horse must exist.");
             }
 
             if (father.getSex() != Sex.male)
@@ -130,12 +124,11 @@ public class Validator {
         if (horse.getSex() != oldHorse.getSex()) {
             List<Horse> children = horseDao.getChildren(oldHorse);
             if (!children.isEmpty()) {
-                //TODO: fix the trailing comma
-                StringBuilder sb = new StringBuilder();
-                for (Horse child: children ) {
-                    sb.append(child.getName()).append(", ");
+                StringJoiner sj = new StringJoiner(", ");
+                for (Horse child : children) {
+                    sj.add(child.getName());
                 }
-                String message = "You cannot change the sex of a horse that has children. This horse has the following children: " + sb.toString();
+                String message = "You cannot change the sex of a horse that has children. This horse has the following children: " + sj.toString();
                 throw new ValidationException(message);
             }
         }
@@ -144,26 +137,18 @@ public class Validator {
 
     public void validateDeletedHorse(Long id) throws ValidationException, NotFoundException {
         Horse horse;
-        try {
-            horse = horseDao.getOneById(id);
-        } catch (PersistenceException e) {
-            throw new ValidationException(e);
-        }
+        horse = horseDao.getOneById(id);
 
         List<Horse> children;
-        try {
-            children = horseDao.getChildren(horse);
-        } catch (PersistenceException e) {
-            throw new ValidationException(e);
-        }
+        children = horseDao.getChildren(horse);
 
         if (children.size() > 0) {
             //TODO: fix the trailing comma
-            StringBuilder sb = new StringBuilder();
-            for (Horse child: children ) {
-                sb.append(child.getName()).append(", ");
+            StringJoiner sj = new StringJoiner(", ");
+            for (Horse child : children) {
+                sj.add(child.getName());
             }
-            String message = "You cannot delete a horse that has children. This horse has the following children: " + sb.toString();
+            String message = "You cannot delete a horse that has children. This horse has the following children: " + sj.toString();
             throw new ValidationException(message);
         }
     }

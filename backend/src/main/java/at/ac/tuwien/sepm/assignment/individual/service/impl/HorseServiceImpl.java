@@ -2,8 +2,6 @@ package at.ac.tuwien.sepm.assignment.individual.service.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
-import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
@@ -31,21 +29,13 @@ public class HorseServiceImpl implements HorseService {
     @Override
     public Horse getOneById(Long id) throws NotFoundException {
         LOGGER.trace("getOneById({})", id);
-        try {
-            return dao.getOneById(id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        return dao.getOneById(id);
     }
 
     @Override
     public List<Horse> getAll() {
         LOGGER.trace("getall()");
-        try {
-            return dao.getAll();
-        } catch (PersistenceException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        return dao.getAll();
     }
 
     @Override
@@ -64,11 +54,7 @@ public class HorseServiceImpl implements HorseService {
         if (horse.getDescription() != null && horse.getDescription().isEmpty())
             horse.setDescription(null);
 
-        try {
-            return dao.add(horse);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        return dao.add(horse);
     }
 
     @Override
@@ -86,11 +72,7 @@ public class HorseServiceImpl implements HorseService {
         if (horse.getDescription() != null && horse.getDescription().isEmpty())
             horse.setDescription(null);
 
-        try {
-            return dao.update(horse);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        return dao.update(horse);
     }
 
     @Override
@@ -100,10 +82,6 @@ public class HorseServiceImpl implements HorseService {
         // The horse must be ok to delete
         validator.validateDeletedHorse(id);
 
-        try {
-            dao.delete(id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        dao.delete(id);
     }
 }

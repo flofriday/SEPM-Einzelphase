@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.service;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 
@@ -14,8 +15,9 @@ public interface HorseService {
      *
      * @param id of the horse to find.
      * @return the horse with the specified id.
-     * @throws ServiceException  if something goes wrong during data processing.
-     * @throws NotFoundException if the horse could not be found in the system.
+     * @throws PersistenceException if something goes wrong at the persitence layer.
+     * @throws ServiceException     if something goes wrong during data processing.
+     * @throws NotFoundException    if the horse could not be found in the system.
      */
     Horse getOneById(Long id) throws NotFoundException;
 
@@ -23,7 +25,8 @@ public interface HorseService {
      * Gets all horses.
      *
      * @return a list with all horses.
-     * @throws ServiceException if something goes wrong during data processing.
+     * @throws PersistenceException if something goes wrong at the persitence layer.
+     * @throws ServiceException     if something goes wrong during data processing.
      */
     List<Horse> getAll();
 
@@ -32,8 +35,9 @@ public interface HorseService {
      *
      * @param horse to add to the storage.
      * @return a modified version of the horse parameter, how it was actually stored.
-     * @throws ValidationException if the input is not valid.
-     * @throws ServiceException  if something goes wrong during data processing.
+     * @throws ValidationException  if the input is not valid.
+     * @throws PersistenceException if something goes wrong at the persitence layer.
+     * @throws ServiceException     if something goes wrong during data processing.
      */
     Horse add(Horse horse) throws ValidationException;
 
@@ -42,8 +46,9 @@ public interface HorseService {
      *
      * @param horse to update.
      * @return a modified version of the horse parameter, how it was actually stored.
-     * @throws ValidationException if the input is not valid.
-     * @throws ServiceException  if something goes wrong during data processing.
+     * @throws ValidationException  if the input is not valid.
+     * @throws PersistenceException if something goes wrong at the persitence layer.
+     * @throws ServiceException     if something goes wrong during data processing.
      */
     Horse update(Horse horse) throws ValidationException, NotFoundException;
 
@@ -52,9 +57,10 @@ public interface HorseService {
      *
      * @param id of the horse to delete.
      * @return the horse with the specified id.
-     * @throws ServiceException  if something goes wrong during data processing.
-     * @throws NotFoundException if the horse could not be found in the system.
-     * @throws ValidationException if the input cannot be deleted.
+     * @throws PersistenceException if something goes wrong at the persitence layer.
+     * @throws ServiceException     if something goes wrong during data processing.
+     * @throws NotFoundException    if the horse could not be found in the system.
+     * @throws ValidationException  if the input cannot be deleted.
      */
     void deleteById(Long id) throws NotFoundException, ValidationException;
 }
