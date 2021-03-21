@@ -1,0 +1,43 @@
+<div class="card">
+    <h5 class="card-header">Filters</h5>
+    <div class="card-body">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="searchName">Name</label>
+                    <input type="text" class="form-control" id="searchName" [(ngModel)]="horse.name" name="name"
+                        placeholder="Name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="searchDescription">Description</label>
+                    <input type="text" class="form-control" id="searchDescription" [(ngModel)]="horse.description"
+                        name="description" placeholder="Description">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="searchSex">Sex</label>
+                    <select id="searchSex" class="form-control" [(ngModel)]="horse.sex" name="searchSex">
+                        <option [ngValue]="null">any</option>
+                        <option [ngValue]="'male'">Male</option>
+                        <option [ngValue]="'female'">Female</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="searchSport">Sport</label>
+                    <select id="searchSport" class="form-control" [(ngModel)]="horse.favoriteSportId" name="sport">
+                        <option [ngValue]="null" selected>any</option>
+                        <option *ngFor="let sport of sports" [value]="sport.id">{{sport.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="searchDate">Born before</label>
+                    <input type="date" class="form-control" id="searchDate" [(ngModel)]="horse.birthDay" name="date">
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary" (click)="onApply()">Apply</button>
+        </form>
+    </div>
+</div>

@@ -1,8 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable, throwError } from "rxjs";
-import { Horse } from "src/app/dto/horse";
+import { Horse, createHorse } from "src/app/dto/horse";
 import { HorseService } from "src/app/service/horse.service";
 import { catchError } from "rxjs/operators";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SportService } from "src/app/service/sport.service";
+import { Sport } from "src/app/dto/sport";
 
 @Component({
   selector: "app-horse-list",
@@ -13,22 +16,39 @@ export class HorseListComponent implements OnInit {
   error = false;
   errorMessage = "";
   horses$: Observable<Horse[]>;
+  sports$: Observable<Sport[]>;
+  searchFilter: Horse;
 
-  constructor(private horseService: HorseService) {}
+  constructor(
+    private horseService: HorseService,
+    private sportService: SportService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.loadHorses();
+    this.sports$ = this.sportService.getAllSports();
+    this.route.queryParams.subscribe((params) => {
+      this.searchFilter = createHorse(params);
+      this.loadHorses();
+    });
   }
 
   private loadHorses() {
     this.error = false;
     this.errorMessage = "";
-    this.horses$ = this.horseService.getAllHorses().pipe(
+    this.horses$ = this.horseService.search(this.searchFilter).pipe(
       catchError((err) => {
         this.defaultServiceErrorHandling(err);
         return throwError(err);
       })
     );
+  }
+
+  private onNewFilter(filter: Horse) {
+    this.router.navigate([], {
+      queryParams: filter,
+    });
   }
 
   private defaultServiceErrorHandling(error: any) {

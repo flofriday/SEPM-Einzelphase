@@ -1,7 +1,13 @@
 <h1 class="display-4" style="margin: 20px 0">Horses</h1>
 
+
 <div *ngIf="!error">
     <a role="button" class="btn btn-primary" style="margin-bottom: 20px;" routerLink="new">New Horse</a>
+
+    <app-horse-search-card *ngIf="sports$ | async as sports" style="margin: 20px" [horse]="searchFilter"
+        [sports]="sports" (applied)="onNewFilter($event)"></app-horse-search-card>
+
+    <h2>Results</h2>
 
     <div *ngIf="horses$ | async" class="row">
         <div *ngFor="let horse of horses$ | async" class="col-md-6" style="padding-bottom: 20px;">
@@ -9,7 +15,7 @@
         </div>
     </div>
 
-    <p *ngIf="!horses$ | async"><i>There are no horses yet.</i></p>
+    <p *ngIf="(horses$ | async)?.length == 0"><i>No results found.</i></p>
 </div>
 
 <div *ngIf="error" class="alert alert-danger">

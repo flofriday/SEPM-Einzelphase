@@ -17,6 +17,7 @@ import { HorseEditComponent } from "./component/horse-edit/horse-edit.component"
 import { HorseCardComponent } from "./component/horse-card/horse-card.component";
 import { SportCardComponent } from "./component/sport-card/sport-card.component";
 import { HorseDeleteComponent } from "./component/horse-delete/horse-delete.component";
+import { HorseSearchCardComponent } from './component/horse-search-card/horse-search-card.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { HorseDeleteComponent } from "./component/horse-delete/horse-delete.comp
     HorseCardComponent,
     SportCardComponent,
     HorseDeleteComponent,
+    HorseSearchCardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],

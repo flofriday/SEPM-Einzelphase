@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -28,6 +28,29 @@ export class HorseService {
   getAllHorses(): Observable<Horse[]> {
     console.log("Load all horses");
     return this.httpClient.get<Horse[]>(baseUri);
+  }
+
+  /**
+   * Fetches all horses from the backend that match the filters.
+   */
+  search(horse: Horse): Observable<Horse[]> {
+    console.log("Search all horses");
+    let params = new HttpParams();
+    if (horse.name !== null) params = params.append("name", horse.name);
+    if (horse.description !== null)
+      params = params.append("description", horse.description);
+    if (horse.sex !== null) params = params.append("sex", horse.sex);
+    if (horse.birthDay !== null)
+      params = params.append("birthDay", horse.birthDay);
+    if (horse.favoriteSportId !== null)
+      params = params.append(
+        "favoriteSportId",
+        horse.favoriteSportId.toString()
+      );
+
+    return this.httpClient.get<Horse[]>(baseUri, {
+      params: params,
+    });
   }
 
   /**
