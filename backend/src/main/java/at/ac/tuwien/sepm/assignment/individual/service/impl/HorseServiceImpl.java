@@ -35,6 +35,19 @@ public class HorseServiceImpl implements HorseService {
     @Override
     public List<Horse> search(Horse horse) {
         LOGGER.trace("search({})", horse);
+
+        // Remove leading and trailing Whitespaces from the string search criteriums
+        if (horse.getName() != null)
+            horse.setName(horse.getName().strip());
+        if (horse.getDescription() != null)
+            horse.setDescription(horse.getDescription().strip());
+
+        // Replace empty strings with null
+        if (horse.getName() != null && horse.getName().isEmpty())
+            horse.setName(null);
+        if (horse.getDescription() != null && horse.getDescription().isEmpty())
+            horse.setDescription(null);
+
         return dao.search(horse);
     }
 
