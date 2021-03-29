@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -120,9 +121,9 @@ public class Validator {
 
 
         // The sex cannot change if the horse has children
+        List<Horse> children = horseDao.getChildren(horse);
         Horse oldHorse = horseDao.getOneById(horse.getId());
         if (horse.getSex() != oldHorse.getSex()) {
-            List<Horse> children = horseDao.getChildren(oldHorse);
             if (!children.isEmpty()) {
                 StringJoiner sj = new StringJoiner(", ");
                 for (Horse child : children) {
@@ -131,6 +132,21 @@ public class Validator {
                 String message = "You cannot change the sex of a horse that has children. This horse has the following children: " + sj.toString();
                 throw new ValidationException(message);
             }
+        }
+
+        // The age of a horse can change, but it cannot become younger than any children.
+        List<Horse> olderChildren = new ArrayList<>();
+        for (Horse child: children) {
+            if (horse.getBirthDay().isAfter(child.getBirthDay()))
+                olderChildren.add(child);
+        }
+        if (!olderChildren.isEmpty()) {
+            StringJoiner sj = new StringJoiner(", ");
+            for (Horse child : olderChildren ) {
+                sj.add(child.getName());
+            }
+            String message = "A horse cannot be younger than its children. This horse would be younger than its following children: " + sj.toString();
+            throw new ValidationException(message);
         }
 
     }
