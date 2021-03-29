@@ -10,8 +10,11 @@ public class Horse {
     private LocalDate birthDay;
     private Sex sex;
     private Long favoriteSportId;
+    private String favoriteSportName;
     private Long motherId;
     private Long fatherId;
+    private String motherName;
+    private String fatherName;
 
     public Horse() {
     }
@@ -78,6 +81,14 @@ public class Horse {
         this.favoriteSportId = favoriteSportId;
     }
 
+    public String getFavoriteSportName() {
+        return favoriteSportName;
+    }
+
+    public void setFavoriteSportName(String favoriteSportName) {
+        this.favoriteSportName = favoriteSportName;
+    }
+
     public Long getMotherId() {
         return motherId;
     }
@@ -93,6 +104,23 @@ public class Horse {
     public void setFatherId(Long fatherId) {
         this.fatherId = fatherId;
     }
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -121,6 +149,6 @@ public class Horse {
 
     @Override
     public String toString() {
-        return "Horse{ " + fieldsString() +" }";
+        return "Horse{ " + fieldsString() + " }";
     }
 }

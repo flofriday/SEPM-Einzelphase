@@ -32,7 +32,19 @@ public class HorseJdbcDao implements HorseDao {
     @Override
     public Horse getOneById(Long id) throws NotFoundException {
         LOGGER.trace("getOneById({})", id);
-        final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
+        final String sql = "SELECT horse.*, " +
+            "sport.name AS favoriteSportName, " +
+            "mother.name AS motherName, " +
+            "father.name AS fatherName " +
+            "FROM horse " +
+            "LEFT JOIN sport " +
+            "ON horse.favoritesport = sport.id " +
+            "LEFT JOIN horse AS mother " +
+            "ON horse.mother = mother.id " +
+            "LEFT JOIN horse AS father " +
+            "ON horse.father = father.id " +
+            "WHERE horse.id  = ?";
+
         List<Horse> horses;
         try {
             horses = jdbcTemplate.query(sql, this::mapRow, id);
@@ -48,12 +60,23 @@ public class HorseJdbcDao implements HorseDao {
     @Override
     public List<Horse> search(Horse horse) {
         LOGGER.trace("search()");
-        final String sql = "SELECT * FROM " + TABLE_NAME +
-            " WHERE (? IS NULL OR LOWER(name) LIKE LOWER(?))" +
-            " AND (? IS NULL OR LOWER(description) LIKE LOWER(?))" +
-            " AND (? IS NULL OR birthday < ?)" +
-            " AND (? IS NULL OR sex = ?)" +
-            " AND (? IS NULL OR favoriteSport = ?)";
+        final String sql =
+            "SELECT horse.*, " +
+                "sport.name AS favoriteSportName, " +
+                "mother.name AS motherName, " +
+                "father.name AS fatherName " +
+                "FROM horse " +
+                "LEFT JOIN sport " +
+                "ON horse.favoritesport = sport.id " +
+                "LEFT JOIN horse AS mother " +
+                "ON horse.mother = mother.id " +
+                "LEFT JOIN horse AS father " +
+                "ON horse.father = father.id " +
+                "WHERE (? IS NULL OR LOWER(horse.name) LIKE LOWER(?))" +
+                " AND (? IS NULL OR LOWER(horse.description) LIKE LOWER(?))" +
+                " AND (? IS NULL OR horse.birthday < ?)" +
+                " AND (? IS NULL OR horse.sex = ?)" +
+                " AND (? IS NULL OR horse.favoriteSport = ?)";
         List<Horse> horses;
 
         String sex = horse.getSex() == null ? null : horse.getSex().toString();
@@ -73,8 +96,19 @@ public class HorseJdbcDao implements HorseDao {
     @Override
     public List<Horse> getChildren(Horse horse) {
         LOGGER.trace("getChildren({})", horse);
-        final String sql = "SELECT * FROM " + TABLE_NAME +
-            " WHERE father=? OR mother=?";
+        final String sql =
+            "SELECT horse.*, " +
+                "sport.name AS favoriteSportName, " +
+                "mother.name AS motherName, " +
+                "father.name AS fatherName " +
+                "FROM horse " +
+                "LEFT JOIN sport " +
+                "ON horse.favoritesport = sport.id " +
+                "LEFT JOIN horse AS mother " +
+                "ON horse.mother = mother.id " +
+                "LEFT JOIN horse AS father " +
+                "ON horse.father = father.id " +
+                "WHERE father=? OR mother=?";
         List<Horse> horses;
 
         try {
@@ -191,8 +225,11 @@ public class HorseJdbcDao implements HorseDao {
         horse.setSex(Sex.valueOf(resultSet.getString("sex")));
         horse.setBirthDay(resultSet.getDate("birthday").toLocalDate());
         horse.setFavoriteSportId(getLongObject(resultSet, "favoriteSport"));
+        horse.setFavoriteSportName(resultSet.getString("favoriteSportName"));
         horse.setMotherId(getLongObject(resultSet, "mother"));
         horse.setFatherId(getLongObject(resultSet, "father"));
+        horse.setMotherName(resultSet.getString("mothername"));
+        horse.setFatherName(resultSet.getString("fathername"));
         return horse;
     }
 }

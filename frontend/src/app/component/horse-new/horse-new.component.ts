@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { forkJoin } from "rxjs";
-import { Horse } from "src/app/dto/horse";
+import { emptyHorse, Horse } from "src/app/dto/horse";
 import { Sport } from "src/app/dto/sport";
 import { HorseService } from "src/app/service/horse.service";
 import { SportService } from "src/app/service/sport.service";
@@ -12,16 +12,7 @@ import { SportService } from "src/app/service/sport.service";
   styleUrls: ["./horse-new.component.scss"],
 })
 export class HorseNewComponent implements OnInit {
-  horse: Horse = {
-    id: null,
-    name: "",
-    description: "",
-    birthDay: "2000-01-01",
-    sex: "male",
-    favoriteSportId: null,
-    motherId: null,
-    fatherId: null,
-  };
+  horse: Horse;
   horses: Horse[];
   sports: Sport[];
   error = false;
@@ -34,6 +25,9 @@ export class HorseNewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.horse = emptyHorse();
+    this.horse.name = "";
+    this.horse.description = "";
     forkJoin([
       this.horseService.getAllHorses(),
       this.sportService.getAllSports(),

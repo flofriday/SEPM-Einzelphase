@@ -23,6 +23,7 @@
     <div class="form-group">
         <label for="sex">Sex</label>
         <select class="form-control" id="sex" required [(ngModel)]="horse.sex" name="sex">
+            <option [value]="null">-- Choose an option --</option>
             <option>female</option>
             <option>male</option>
         </select>

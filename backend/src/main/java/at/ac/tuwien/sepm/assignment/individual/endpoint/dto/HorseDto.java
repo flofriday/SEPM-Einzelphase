@@ -9,8 +9,11 @@ public class HorseDto {
     private String birthDay;
     private String sex;
     private Long favoriteSportId;
+    private String favoriteSportName;
     private Long motherId;
     private Long fatherId;
+    private String motherName;
+    private String fatherName;
 
     public HorseDto() {
     }
@@ -63,6 +66,14 @@ public class HorseDto {
         this.favoriteSportId = favoriteSportId;
     }
 
+    public String getFavoriteSportName() {
+        return favoriteSportName;
+    }
+
+    public void setFavoriteSportName(String favoriteSportName) {
+        this.favoriteSportName = favoriteSportName;
+    }
+
     public Long getMotherId() {
         return motherId;
     }
@@ -77,6 +88,22 @@ public class HorseDto {
 
     public void setFatherId(Long fatherId) {
         this.fatherId = fatherId;
+    }
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
     }
 
     @Override

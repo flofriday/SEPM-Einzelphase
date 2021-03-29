@@ -23,8 +23,12 @@ public class HorseMapper {
         dto.setBirthDay(DateTimeFormatter.ISO_DATE.format(horse.getBirthDay()));
         dto.setSex(horse.getSex().toString());
         dto.setFavoriteSportId(horse.getFavoriteSportId());
+        dto.setFavoriteSportName(horse.getFavoriteSportName());
         dto.setMotherId(horse.getMotherId());
         dto.setFatherId(horse.getFatherId());
+        dto.setFatherName(horse.getFatherName());
+        dto.setMotherName(horse.getMotherName());
+
         return dto;
     }
 
@@ -44,6 +48,7 @@ public class HorseMapper {
         horse.setFavoriteSportId(dto.getFavoriteSportId());
         horse.setMotherId(dto.getMotherId());
         horse.setFatherId(dto.getFatherId());
+        // Don't copy father and mother name as they are never part of a valid input
         return horse;
     }
 

@@ -18,20 +18,20 @@
         <li class="list-group-item"><strong>Sex: </strong> {{ horse.sex }}</li>
         <li class="list-group-item">
             <strong>Favorite Sport: </strong>
-            <span *ngIf="sport">{{ sport.name }}</span>
+            <span *ngIf="horse.favoriteSportId">{{ horse.favoriteSportName }}</span>
             <i *ngIf="!horse.favoriteSportId">not set</i>
         </li>
         <li class="list-group-item">
             <strong>mother: </strong>
-            <a [routerLink]="['/horses', horse.motherId]" *ngIf="mother">{{
-                mother.name
+            <a [routerLink]="['/horses', horse.motherId]" *ngIf="horse.motherId">{{
+                horse.motherName
                 }}</a>
             <i *ngIf="!horse.motherId">not set</i>
         </li>
         <li class="list-group-item">
             <strong>father: </strong>
-            <a [routerLink]="['/horses', horse.fatherId]" *ngIf="father">{{
-                father.name
+            <a [routerLink]="['/horses', horse.fatherId]" *ngIf="horse.fatherId">{{
+                horse.fatherName
                 }}</a>
             <i *ngIf="!horse.fatherId">not set</i>
         </li>

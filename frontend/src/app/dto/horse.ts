@@ -5,8 +5,11 @@ export interface Horse {
   birthDay: string;
   sex: string;
   favoriteSportId: number;
+  favoriteSportName: string;
   motherId: number;
+  motherName: string;
   fatherId: number;
+  fatherName: string;
 }
 
 export const emptyHorse = (): Horse => ({
@@ -16,8 +19,11 @@ export const emptyHorse = (): Horse => ({
   birthDay: null,
   sex: null,
   favoriteSportId: null,
+  favoriteSportName: null,
   motherId: null,
+  motherName: null,
   fatherId: null,
+  fatherName: null,
 });
 
 export const createHorse = <T extends Partial<Horse>>(
