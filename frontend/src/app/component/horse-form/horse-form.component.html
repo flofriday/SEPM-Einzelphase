@@ -3,11 +3,17 @@
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" placeholder="Horse Name" required [(ngModel)]="horse.name"
             name="name">
+        <small [ngClass]="{'text-danger' : horse.name.length > 256,'text-muted' : horse.name.length <= 256 }"
+            class=" form-text">{{horse.name.length}} / 256</small>
     </div>
     <div class="form-group">
         <label for="description">Description (optional)</label>
         <textarea class="form-control" id="description" rows="3" [(ngModel)]="horse.description"
             name="description"></textarea>
+        <small *ngIf="!horse.description" class=" form-text text-muted">0 / 1024</small>
+        <small *ngIf="horse.description"
+            [ngClass]="{'text-danger' : horse.description.length > 1024,'text-muted' : horse.description.length <= 1024 }"
+            class=" form-text">{{horse.description.length}} / 1024</small>
     </div>
     <div class="form-group">
         <label for="birthDay">Birthdate</label>
