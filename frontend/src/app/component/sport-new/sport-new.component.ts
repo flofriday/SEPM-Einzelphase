@@ -7,11 +7,11 @@ import { Sport } from "../../dto/sport";
 // TODO: This component shouldn't be its own screen but just a modal
 
 @Component({
-  selector: "app-sport-form",
-  templateUrl: "./sport-form.component.html",
-  styleUrls: ["./sport-form.component.scss"],
+  selector: "app-sport-new",
+  templateUrl: "./sport-new.component.html",
+  styleUrls: ["./sport-new.component.scss"],
 })
-export class SportFormComponent implements OnInit {
+export class SportNewComponent implements OnInit {
   error = false;
   errorMessage = "";
   sport: Sport = { id: null, name: "", description: "" };

@@ -8,7 +8,7 @@ import { SportComponent } from "./component/sport/sport.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { SportListComponent } from "./component/sport-list/sport-list.component";
-import { SportFormComponent } from "./component/sport-form/sport-form.component";
+import { SportNewComponent } from "./component/sport-new/sport-new.component";
 import { HorseListComponent } from "./component/horse-list/horse-list.component";
 import { HorseFormComponent } from "./component/horse-form/horse-form.component";
 import { HorseDetailComponent } from "./component/horse-detail/horse-detail.component";
@@ -17,7 +17,7 @@ import { HorseEditComponent } from "./component/horse-edit/horse-edit.component"
 import { HorseCardComponent } from "./component/horse-card/horse-card.component";
 import { SportCardComponent } from "./component/sport-card/sport-card.component";
 import { HorseDeleteComponent } from "./component/horse-delete/horse-delete.component";
-import { HorseSearchCardComponent } from './component/horse-search-card/horse-search-card.component';
+import { HorseSearchCardComponent } from "./component/horse-search-card/horse-search-card.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { HorseSearchCardComponent } from './component/horse-search-card/horse-se
     HeaderComponent,
     SportComponent,
     SportListComponent,
-    SportFormComponent,
+    SportNewComponent,
     HorseListComponent,
     HorseFormComponent,
     HorseDetailComponent,
