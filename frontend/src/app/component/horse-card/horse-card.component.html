@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">{{horse.name}}</h5>
-        <p *ngIf="horse.description" class="card-text">{{horse.description}}</p>
+        <p *ngIf="horse.description" style="white-space: pre-line" class="card-text">{{horse.description}}</p>
         <p *ngIf="!horse.description" class="card-text"><i>no description available</i></p>
 
         <a routerLink="{{horse.id}}" class="btn btn-outline-primary btn-sm mr-1">Details</a>

@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">{{sport.name}}</h5>
-        <p *ngIf="sport.description" class="card-text">{{sport.description}}</p>
+        <p *ngIf="sport.description" style="white-space: pre-line" class="card-text">{{sport.description}}</p>
         <p *ngIf="!sport.description" class="card-text"><i>no description available</i></p>
     </div>
 </div>

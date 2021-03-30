@@ -8,7 +8,7 @@
 <div *ngIf="!error && horse" class="card mx-auto" style="max-width: 32rem">
     <div class="card-body">
         <h5 class="card-title">{{ horse.name }}</h5>
-        <p *ngIf="horse.description" class="card-text">{{ horse.description }}</p>
+        <p *ngIf="horse.description" style="white-space: pre-line" class="card-text">{{ horse.description }}</p>
         <p *ngIf="!horse.description" class="card-text"><i>no description</i></p>
     </div>
     <ul class="list-group list-group-flush">
@@ -22,14 +22,14 @@
             <i *ngIf="!horse.favoriteSportId">not set</i>
         </li>
         <li class="list-group-item">
-            <strong>mother: </strong>
+            <strong>Mother: </strong>
             <a [routerLink]="['/horses', horse.motherId]" *ngIf="horse.motherId">{{
                 horse.motherName
                 }}</a>
             <i *ngIf="!horse.motherId">not set</i>
         </li>
         <li class="list-group-item">
-            <strong>father: </strong>
+            <strong>Father: </strong>
             <a [routerLink]="['/horses', horse.fatherId]" *ngIf="horse.fatherId">{{
                 horse.fatherName
                 }}</a>
