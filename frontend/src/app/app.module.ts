@@ -18,6 +18,8 @@ import { HorseCardComponent } from "./component/horse-card/horse-card.component"
 import { SportCardComponent } from "./component/sport-card/sport-card.component";
 import { HorseDeleteComponent } from "./component/horse-delete/horse-delete.component";
 import { HorseSearchCardComponent } from "./component/horse-search-card/horse-search-card.component";
+import { HorseTreeComponent } from "./component/horse-tree/horse-tree.component";
+import { HorseTreeItemComponent } from './component/horse-tree-item/horse-tree-item.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { HorseSearchCardComponent } from "./component/horse-search-card/horse-se
     SportCardComponent,
     HorseDeleteComponent,
     HorseSearchCardComponent,
+    HorseTreeComponent,
+    HorseTreeItemComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],

@@ -7,6 +7,7 @@ import { HorseListComponent } from "./component/horse-list/horse-list.component"
 import { HorseNewComponent } from "./component/horse-new/horse-new.component";
 import { SportNewComponent } from "./component/sport-new/sport-new.component";
 import { SportListComponent } from "./component/sport-list/sport-list.component";
+import { HorseTreeComponent } from "./component/horse-tree/horse-tree.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/horses", pathMatch: "full" },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: "horses/:id", component: HorseDetailComponent },
   { path: "horses/:id/edit", component: HorseEditComponent },
   { path: "horses/:id/delete", component: HorseDeleteComponent },
+  { path: "horses/:id/tree", component: HorseTreeComponent },
 ];
 
 @NgModule({

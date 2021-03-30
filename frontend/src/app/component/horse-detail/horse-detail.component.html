@@ -37,7 +37,7 @@
         </li>
     </ul>
     <div class="card-body">
-        <a href="#" class="btn btn-outline-primary btn-sm mr-1">Family Tree</a>
+        <a [routerLink]="'/horses/' + horse.id + '/tree'" class="btn btn-outline-primary btn-sm mr-1">Family Tree</a>
         <a routerLink="edit" class="btn btn-outline-primary btn-sm mr-1">Edit</a>
         <a routerLink="delete" class="btn btn-outline-danger btn-sm mr-1">Delete</a>
     </div>

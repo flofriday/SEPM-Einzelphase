@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Horse } from "../dto/horse";
+import { HorseTree } from "../dto/horsetree";
 
 const baseUri = environment.backendUrl + "/horses";
 
@@ -51,6 +52,13 @@ export class HorseService {
     return this.httpClient.get<Horse[]>(baseUri, {
       params: params,
     });
+  }
+
+  getTreeById(id: number, depth: number): Observable<HorseTree> {
+    console.log("Load horse tree for " + id);
+    return this.httpClient.get<HorseTree>(
+      baseUri + "/" + id + "/tree?depth=" + depth
+    );
   }
 
   /**

@@ -1,0 +1,24 @@
+<h1 class="display-4" style="margin: 20px 0">Horse Familiytree</h1>
+
+<div *ngIf="error" class="alert alert-danger">
+    <strong>Error! </strong> {{errorMessage}}
+</div>
+
+<div class="card mb-4" (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" #treeForm="ngForm">
+        <div class="card-body">
+            <h5 class="card-title">Tree depth</h5>
+            <div class="input-group mb-3">
+                <input required type="number" class="form-control" [(ngModel)]="depth" name="depth" min="1">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" [disabled]="depth <= 0">Update</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ul class="list-group">
+    <app-horse-tree-item *ngIf="tree$ | async as tree" [tree]="tree">
+    </app-horse-tree-item>
+</ul>

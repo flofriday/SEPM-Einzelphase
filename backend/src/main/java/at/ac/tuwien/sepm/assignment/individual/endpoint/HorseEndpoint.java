@@ -67,8 +67,8 @@ public class HorseEndpoint {
     }
 
     @GetMapping(value = "/{id}/tree")
-    public HorseTreeDto getTree(@PathVariable("id") Long id, @RequestParam("depth") Integer depth) {
-        LOGGER.info("GET " + BASE_URL + "/{}/tree", id);
+    public HorseTreeDto getTree(@PathVariable("id") Long id, @RequestParam(required = false) Integer depth) {
+        LOGGER.info("GET " + BASE_URL + "/{}/tree?depth={}", id, depth);
 
         // Default depth value is 3
         if (depth == null)

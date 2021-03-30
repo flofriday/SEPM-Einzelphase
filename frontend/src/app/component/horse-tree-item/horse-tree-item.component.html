@@ -1,0 +1,24 @@
+<li href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+        <span>
+            <button class="btn btn-primary btn-sm mr-3" type="button" data-toggle="collapse"
+                [attr.data-target]="'#collapseParents' + tree.id" aria-expanded="false"
+                style="display: inline-block; width:32px; height:32px; border-radius: 16px;"
+                [attr.aria-controls]="'collapseParents' + tree.id" (click)="onCollapse()">
+                {{collapsed ? '+' : '-'}}
+            </button>
+            <h5 class="mb-1" style="display: inline;"><a [routerLink]="'/horses/' + tree.id">{{tree.name}}</a>
+            </h5>
+        </span>
+        <span>
+            <span class="text-muted mr-3">{{tree.birthDay}} </span>
+            <a [routerLink]="'/horses/' + tree.id + '/delete'" class="btn btn-sm btn-danger">Delete</a>
+        </span>
+    </div>
+</li>
+<div style="margin-left: 30px;" class="collapse show" [id]="'collapseParents'+tree.id">
+    <app-horse-tree-item *ngIf="tree.mother" [tree]="tree.mother">
+    </app-horse-tree-item>
+    <app-horse-tree-item *ngIf="tree.father" [tree]="tree.father">
+    </app-horse-tree-item>
+</div>
