@@ -1,9 +1,5 @@
 <h1 class="display-4" style="margin: 20px 0">Horse Details</h1>
 
-<!--
-<app-horse-form *ngIf="!error" [horse]="horse" [readonly]="true">
-</app-horse-form>
--->
 
 <div *ngIf="!error && horse" class="card mx-auto" style="max-width: 32rem">
     <div class="card-body">
@@ -45,8 +41,4 @@
 
 <div *ngIf="error" class="alert alert-danger">
     <strong>Error! </strong> {{ errorMessage }}
-    <hr />
-    <button (click)="loadData()" type="button" class="btn btn-secondary">
-        Reload
-    </button>
 </div>
