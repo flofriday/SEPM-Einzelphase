@@ -1,7 +1,9 @@
 package at.ac.tuwien.sepm.assignment.individual.endpoint;
 
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseDto;
+import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseTreeDto;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.mapper.HorseMapper;
+import at.ac.tuwien.sepm.assignment.individual.endpoint.mapper.HorseTreeMapper;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
@@ -24,11 +26,13 @@ public class HorseEndpoint {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final HorseService horseService;
     private final HorseMapper horseMapper;
+    private final HorseTreeMapper horseTreeMapper;
 
     @Autowired
-    public HorseEndpoint(HorseService horseService, HorseMapper horseMapper) {
+    public HorseEndpoint(HorseService horseService, HorseMapper horseMapper, HorseTreeMapper horseTreeMapper) {
         this.horseService = horseService;
         this.horseMapper = horseMapper;
+        this.horseTreeMapper = horseTreeMapper;
     }
 
     @GetMapping(value = "/{id}")
@@ -43,7 +47,7 @@ public class HorseEndpoint {
     }
 
     @GetMapping(value = "")
-    public List<HorseDto> getAll(HorseDto dto) {
+    public List<HorseDto> search(HorseDto dto) {
         LOGGER.info("GET " + BASE_URL);
 
         Horse horse;
@@ -60,6 +64,23 @@ public class HorseEndpoint {
         }
 
         return horseMapper.entityListToDto(horseService.search(horse));
+    }
+
+    @GetMapping(value = "/{id}/tree")
+    public HorseTreeDto getTree(@PathVariable("id") Long id, @RequestParam("depth") Integer depth) {
+        LOGGER.info("GET " + BASE_URL + "/{}/tree", id);
+
+        // Default depth value is 3
+        if (depth == null)
+            depth = 3;
+
+        // TODO: check exceptions here
+        try {
+            return horseTreeMapper.entityToDto(horseService.getTree(id, depth));
+        } catch (ValidationException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
+        }
     }
 
     @ResponseStatus(HttpStatus.CREATED)

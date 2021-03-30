@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.service;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.entity.HorseTree;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
@@ -29,6 +30,19 @@ public interface HorseService {
      * @throws ServiceException     if something goes wrong during data processing.
      */
     List<Horse> search(Horse horse);
+
+    /**
+     * Familiy tree of a specified horse.
+     * The tree only contains ancestors.
+     *
+     * @param id    of the horse to create the tree for.
+     * @param depth of the tree.
+     * @throws ValidationException  if the input is not valid.
+     * @throws PersistenceException if something goes wrong at the persitence layer.
+     * @throws ServiceException     if something goes wrong during data processing.
+     * @throws NotFoundException    if the horse could not be found in the system.
+     */
+    HorseTree getTree(Long id, Integer depth) throws ValidationException;
 
     /**
      * Add a new horse.

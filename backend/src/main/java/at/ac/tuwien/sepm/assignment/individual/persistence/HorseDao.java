@@ -1,8 +1,10 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.entity.HorseTree;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
+import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 
 import java.util.List;
 
@@ -28,6 +30,18 @@ public interface HorseDao {
      * @throws PersistenceException will be thrown if something goes wrong while accessing the persistent data storage.
      */
     List<Horse> search(Horse horse);
+
+    /**
+     * Familiy tree of a specified horse.
+     * The tree only contains ancestors.
+     *
+     * @param id    of the horse to create the tree for.
+     * @param depth of the tree.
+     * @throws PersistenceException if something goes wrong at the persitence layer.
+     * @throws NotFoundException    if the horse could not be found in the system.
+     */
+    HorseTree getTree(Long id, Integer depth) throws ValidationException;
+
 
     /**
      * Get all children from a horse from the database.

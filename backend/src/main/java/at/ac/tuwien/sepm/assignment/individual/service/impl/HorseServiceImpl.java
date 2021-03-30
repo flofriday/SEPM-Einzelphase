@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.service.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.entity.HorseTree;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
@@ -49,6 +50,17 @@ public class HorseServiceImpl implements HorseService {
             horse.setDescription(null);
 
         return dao.search(horse);
+    }
+
+    @Override
+    public HorseTree getTree(Long id, Integer depth) throws ValidationException {
+        LOGGER.trace("getTree({}, {})", id, depth);
+
+        if (depth < 1) {
+            throw new ValidationException("The tree must have at least a height of one.");
+        }
+
+        return dao.getTree(id, depth);
     }
 
     @Override
