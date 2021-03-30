@@ -1,2 +1,2 @@
 ./mvnw clean package
-java -Dspring.profiles.active=datagen -jar target/e01234567-0.0.1-SNAPSHOT.jar
+java -Dspring.profiles.active=datagen -jar target/e11908096-0.0.1-SNAPSHOT.jar
