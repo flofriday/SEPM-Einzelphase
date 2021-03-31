@@ -1,4 +1,4 @@
-package at.ac.tuwien.sepm.assignment.individual.unit.persistence;
+package at.ac.tuwien.sepm.assignment.individual.unit.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 

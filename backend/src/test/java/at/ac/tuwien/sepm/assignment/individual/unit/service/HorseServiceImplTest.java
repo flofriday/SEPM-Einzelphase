@@ -1,7 +1,5 @@
+package at.ac.tuwien.sepm.assignment.individual.unit.service;
 
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
-
-import at.ac.tuwien.sepm.assignment.individual.unit.persistence.HorseServiceTestBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,9 +12,11 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@ActiveProfiles({"test", "datagen"})
+@ActiveProfiles("test")
 public class HorseServiceImplTest extends HorseServiceTestBase {
 
     @Autowired

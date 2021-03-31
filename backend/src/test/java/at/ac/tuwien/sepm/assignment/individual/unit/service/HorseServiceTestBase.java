@@ -1,36 +1,37 @@
-package at.ac.tuwien.sepm.assignment.individual.unit.persistence;
+package at.ac.tuwien.sepm.assignment.individual.unit.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import at.ac.tuwien.sepm.assignment.individual.entity.Sport;
+import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.exception.ValidationException;
-import at.ac.tuwien.sepm.assignment.individual.persistence.SportDao;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
-import at.ac.tuwien.sepm.assignment.individual.service.SportService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles({"test", "datagen"})
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public abstract class HorseServiceTestBase {
 
     @Autowired
     HorseService horseService;
 
     @Test
-    @DisplayName("Creating a sport with an emtpy name should throw an Exception")
-    public void addNewSport_inValidnoName_shouldThrowValidationException() {
-        Sport sport = new Sport(null, "    ");
-        sport.setDescription("Something");
-        assertThrows(ValidationException.class, () -> horseService.add(horse));
+    @DisplayName("Deleteing nonexisting Horse should throw NotFoundException")
+    public void deleteNonexistingHorse() {
+        assertThrows(NotFoundException.class,
+            () -> horseService.deleteById(42L));
     }
 
     @Test
-    @DisplayName("Creating a sport with an id should throw an Exception")
-    public void addNewSport_inValidExistingId_shouldThrowValidationException() {
-        Sport sport = new Sport(34L, "Supersport");
-        sport.setDescription("Something");
-        assertThrows(ValidationException.class, () -> horseService.add(horse));
+    @DisplayName("Creating Horse with empty name results in ValidationExeption")
+    public void addHorse_missingSex() {
+        Horse horse = new Horse();
+        horse.setName("Flotschi");
+        horse.setBirthDay(LocalDate.now());
+        assertThrows(ValidationException.class,
+            () -> horseService.add(new Horse()));
     }
+
 }

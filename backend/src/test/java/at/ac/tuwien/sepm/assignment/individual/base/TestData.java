@@ -27,5 +27,4 @@ public interface TestData {
         return new Sport(1L, "Sport");
     }
 
-
 }
