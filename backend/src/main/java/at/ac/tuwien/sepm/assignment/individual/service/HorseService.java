@@ -62,6 +62,7 @@ public interface HorseService {
      * @return a modified version of the horse parameter, how it was actually stored.
      * @throws ValidationException  if the input is not valid.
      * @throws PersistenceException if something goes wrong at the persitence layer.
+     * @throws NotFoundException    if the horse could not be found in the system.
      * @throws ServiceException     if something goes wrong during data processing.
      */
     Horse update(Horse horse) throws ValidationException, NotFoundException;

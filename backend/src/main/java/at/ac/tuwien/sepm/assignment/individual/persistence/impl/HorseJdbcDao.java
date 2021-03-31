@@ -201,14 +201,14 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public Horse update(Horse horse) {
+    public Horse update(Horse horse) throws NotFoundException {
         LOGGER.trace("update({})", horse);
         final String sql = "UPDATE " + TABLE_NAME +
             " SET name=?, description=?, birthday=?, sex=?, favoriteSport=?, mother=?, father=?" +
             "WHERE id=?";
-        //KeyHolder keyHolder = new GeneratedKeyHolder();
+        int affectedRows;
         try {
-            jdbcTemplate.update(sql,
+            affectedRows = jdbcTemplate.update(sql,
                 horse.getName(),
                 horse.getDescription(),
                 horse.getBirthDay().toString(),
@@ -222,11 +222,15 @@ public class HorseJdbcDao implements HorseDao {
             throw new PersistenceException(e);
         }
 
+        if (affectedRows <= 0) {
+            throw new NotFoundException("No row was updated.");
+        }
+
         return horse;
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) throws NotFoundException {
         LOGGER.trace("delete({})", id);
         final String sql = "DELETE FROM " + TABLE_NAME +
             " WHERE id=?";
@@ -243,7 +247,7 @@ public class HorseJdbcDao implements HorseDao {
         }
 
         if (affectedRows <= 0) {
-            throw new PersistenceException("No row was deleted.");
+            throw new NotFoundException("No row was deleted.");
         }
 
     }

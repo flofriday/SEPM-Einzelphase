@@ -1,7 +1,7 @@
-package at.ac.tuwien.sepm.assignment.individual.unit.persistence;
 
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import at.ac.tuwien.sepm.assignment.individual.unit.persistence.HorseServiceTestBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +17,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles({"test", "datagen"})
-public class SportDaoJdbcTest extends SportDaoTestBase {
+public class HorseServiceImplTest extends HorseServiceTestBase {
 
     @Autowired
     PlatformTransactionManager txm;

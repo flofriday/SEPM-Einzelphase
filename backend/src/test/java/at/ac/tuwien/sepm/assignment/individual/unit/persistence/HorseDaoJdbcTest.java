@@ -17,7 +17,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles({"test", "datagen"})
-public class SportDaoJdbcTest extends SportDaoTestBase {
+public class HorseDaoJdbcTest extends HorseDaoTestBase {
 
     @Autowired
     PlatformTransactionManager txm;
