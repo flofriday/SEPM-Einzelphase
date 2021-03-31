@@ -4,8 +4,6 @@ import { first } from "rxjs/operators";
 import { SportService } from "src/app/service/sport.service";
 import { Sport } from "../../dto/sport";
 
-// TODO: This component shouldn't be its own screen but just a modal
-
 @Component({
   selector: "app-sport-new",
   templateUrl: "./sport-new.component.html",

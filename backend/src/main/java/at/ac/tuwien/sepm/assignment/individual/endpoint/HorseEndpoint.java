@@ -74,7 +74,6 @@ public class HorseEndpoint {
         if (depth == null)
             depth = 3;
 
-        // TODO: check exceptions here
         try {
             return horseTreeMapper.entityToDto(horseService.getTree(id, depth));
         } catch (ValidationException e) {
@@ -92,7 +91,6 @@ public class HorseEndpoint {
         try {
             horse = horseMapper.dtoToEntity(horseDto);
         } catch (Exception e) {
-            // TODO: Is this the right response?
             LOGGER.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -111,11 +109,9 @@ public class HorseEndpoint {
 
         Horse horse;
         try {
-            // TODO: that dowsn't seam right
             horse = horseMapper.dtoToEntity(horseDto);
             horse.setId(id);
         } catch (Exception e) {
-            // TODO: Is this the right response?
             LOGGER.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }

@@ -159,7 +159,6 @@ public class Validator {
         children = horseDao.getChildren(horse);
 
         if (children.size() > 0) {
-            //TODO: fix the trailing comma
             StringJoiner sj = new StringJoiner(", ");
             for (Horse child : children) {
                 sj.add(child.getName());
