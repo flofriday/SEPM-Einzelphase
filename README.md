@@ -25,3 +25,26 @@
 * TS 24 
 	** [-4] Es werden Catch-All Klauseln "catch(Exception e)" an 3 Stellen im HorseEndpoint verwendet. Das ist zu allgemein und kann nicht sinnvoll behandelt werden
 ```
+
+## Usage
+
+**Backend**
+```
+cd backend
+./mvnw compile
+java -jar target/e11908096-0.0.1-SNAPSHOT.jar
+```
+
+**Frontend**
+
+So this should work, however `ng serve` crashes now when it tries to build.
+
+If you get it to run please, PLEASE create an issue and tell me how you did it.
+
+I assume it is because angular has now a new version, but even when I try to force npm to install the old angular 11 it doesn't build.
+
+```
+cd frontend
+npm install
+ng serve
+```
